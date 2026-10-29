@@ -1,0 +1,56 @@
+/* SiteHeader styles */
+body{margin:0}
+
+.sh{container-type:inline-size;container-name:sh;position:sticky;top:0;z-index:30;width:100%;background:rgba(28,24,20,.95);border-bottom:1px solid rgba(242,229,207,.16);font-family:"Karla",system-ui,sans-serif;color:#F2E5CF}
+
+.sh *{box-sizing:border-box}
+
+.sh :focus-visible{outline:3px solid #D9A066;outline-offset:3px;border-radius:4px}
+
+.sh-wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 48px}
+
+.sh-row{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:76px}
+
+.sh-brand{display:flex;align-items:center;min-height:44px}
+
+.sh-logo{display:block;height:44px;width:auto;padding:4px 0}
+
+.sh-nav{display:flex;align-items:center;gap:8px}
+
+.sh-links{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+
+.sh-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;color:#F2E5CF;text-decoration:none;font-weight:500;font-size:16px;border-radius:6px}
+
+.sh-links a:hover{background:rgba(242,229,207,.08);color:#F2E5CF}
+
+.sh-links a[aria-current="page"]{color:#D9A066;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px}
+
+.sh-util{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;margin-left:8px;border:1px solid #C78B4C;border-radius:999px;color:#D9A066;text-decoration:none;font-weight:600;font-size:15px;white-space:nowrap}
+
+.sh-util:hover{background:#C78B4C;color:#1C1814}
+
+.sh-menu{display:none;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:44px;padding:0 12px;background:transparent;border:1px solid rgba(242,229,207,.16);border-radius:8px;color:#F2E5CF;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+
+.sh-panel{display:flex;flex-direction:column;padding:4px 0 16px;border-top:1px solid rgba(242,229,207,.16)}
+
+.sh-panel a{display:flex;align-items:center;min-height:52px;color:#F2E5CF;text-decoration:none;font-size:18px;font-weight:500;border-bottom:1px solid rgba(242,229,207,.16)}
+
+.sh-panel a[aria-current="page"]{color:#D9A066}
+
+.sh-panel a.sh-panel-util{border-bottom:none;color:#D9A066;font-weight:600}
+
+@container sh (max-width: 1000px){
+  .sh-links,.sh-util{display:none}
+
+  .sh-menu{display:inline-flex}
+
+}
+
+@container sh (max-width: 640px){
+  .sh-wrap{padding:0 16px}
+
+  .sh-row{min-height:64px}
+
+  .sh-logo{height:40px}
+
+}
