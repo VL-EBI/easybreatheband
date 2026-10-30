@@ -50,7 +50,7 @@ a:hover{color:#F2E5CF}
 
 .print{position:relative;margin:0;padding:16px;background:url(../assets/img/texture-paper.jpg) center/600px,#F2E5CF;border-radius:2px;box-shadow:0 40px 70px -34px rgba(0,0,0,.9);transform:rotate(-1deg)}
 
-.print img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:#261E18}
+.print img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain;background:#261E18}
 
 .print .tape--l{top:-14px;left:40px;transform:rotate(-5deg)}
 

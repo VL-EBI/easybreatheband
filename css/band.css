@@ -37,7 +37,7 @@ a:hover{color:#F2E5CF}
 
 .print{position:relative;margin:0;padding:18px;background:url(../assets/img/texture-paper.jpg) center/600px,#F2E5CF;border-radius:2px;box-shadow:0 40px 70px -34px rgba(0,0,0,.9);transform:rotate(-.6deg)}
 
-.print img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:#261E18}
+.print img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain;background:#261E18}
 
 .print .tape--l{top:-14px;left:40px;transform:rotate(-5deg)}
 
@@ -69,19 +69,19 @@ a:hover{color:#F2E5CF}
 
 .m-photo .tape{top:-13px;left:50%;margin-left:-55px;transform:rotate(-3deg)}
 
-.m-crop{width:100%;aspect-ratio:4/5;background-repeat:no-repeat;background-size:404.2% auto;background-color:#261E18}
+.m-crop{width:100%;aspect-ratio:4/5;background-repeat:no-repeat;background-size:591.33% auto;background-color:#261E18}
 
 .m-crop.is-unmasked{background-image:url(../assets/img/ebb-band-unmasked.jpg)}
 
 .m-crop.is-masked{background-image:url(../assets/img/ebb-band-masked.jpg)}
 
-.m-crop.m-cal{background-position:6.9% 10.9%}
+.m-crop.m-cal{background-position:23.07% 24.41%}
 
-.m-crop.m-nina{background-position:35% 24.6%}
+.m-crop.m-nina{background-position:41.38% 36.33%}
 
-.m-crop.m-ben{background-position:63.1% 24.6%}
+.m-crop.m-ben{background-position:58.68% 36.33%}
 
-.m-crop.m-tom{background-position:94.3% 9.1%}
+.m-crop.m-tom{background-position:77.34% 27.34%}
 
 .seg{display:inline-flex;gap:4px;padding:4px;border-radius:999px;border:1px solid rgba(242,229,207,.22)}
 

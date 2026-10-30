@@ -62,9 +62,9 @@ html{scroll-behavior:smooth}
 .btn[disabled],.btn-ghost[disabled]{cursor:not-allowed;background:transparent;border-color:rgba(242,229,207,.28);color:#BDAE95}
 
 /* hero */
-.hero-stage{margin:0 auto;max-width:1600px;background:#0F0C0A}
+.hero-stage{margin:0 auto;max-width:2000px;background:#0F0C0A}
 
-.hero-stage img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+.hero-stage img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain}
 
 .hero-band{background:url(../assets/img/texture-bokeh.jpg) center/cover no-repeat,#1E1712;border-top:3px solid var(--amber);border-bottom:1px solid var(--line)}
 
@@ -186,7 +186,7 @@ html{scroll-behavior:smooth}
 /* band print */
 .print{position:relative;margin:0 0 56px;padding:18px;background:url(../assets/img/texture-paper.jpg) center/600px,#F2E5CF;border-radius:2px;box-shadow:0 40px 70px -34px rgba(0,0,0,.9);transform:rotate(-.6deg)}
 
-.print img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:#261E18}
+.print img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain;background:#261E18}
 
 .print .tape--l{top:-14px;left:40px;transform:rotate(-5deg)}
 
