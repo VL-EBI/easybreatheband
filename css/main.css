@@ -209,6 +209,19 @@ html{scroll-behavior:smooth}
 
 .bio p.bio-text{font-size:17px;line-height:1.6;color:var(--muted);margin-top:8px}
 
+/* gallery teaser */
+.scenes-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:40px}
+
+.mosaic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(150px,20cqi,260px);gap:16px}
+
+.mosaic .tile{display:block;overflow:hidden;border-radius:4px;background:#261E18;box-shadow:0 24px 40px -24px rgba(0,0,0,.85)}
+
+.mosaic .tile--big{grid-column:span 2;grid-row:span 2}
+
+.mosaic .tile img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform .4s ease}
+
+.mosaic .tile:hover img{transform:scale(1.03)}
+
 /* updates */
 .updates{background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 
@@ -353,6 +366,10 @@ html{scroll-behavior:smooth}
 
   .swipe-hint{display:block;margin-bottom:12px;font-family:var(--f-label);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber-hi)}
 
+  .mosaic{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:150px;gap:10px}
+
+  .scenes-head{margin-bottom:28px}
+
   .bios{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 12px;scroll-padding:0 16px;scrollbar-width:none}
 
   .bios::-webkit-scrollbar{display:none}
@@ -373,5 +390,7 @@ html{scroll-behavior:smooth}
   .ebb *{transition:none !important;scroll-behavior:auto !important}
 
   .disc.is-spinning,.eq i{animation:none !important}
+
+  .mosaic .tile:hover img{transform:none}
 
 }

@@ -19,6 +19,7 @@
   function DCLogic(props) { this.props = props || {}; }
   DCLogic.prototype.setState = function (update) {
     var next = typeof update === 'function' ? update(this.state) : update;
+    if (!this.__prevState) this.__prevState = this.state || {};
     this.state = Object.assign({}, this.state, next);
     schedule();
   };
@@ -183,6 +184,11 @@
     var fresh = document.createElement('div');
     renderComponent(rootName, {}, fresh);
     patchChildren(rootEl, fresh);
+    mounted.forEach(function (m) {
+      if (!m.__prevState) return;
+      var prev = m.__prevState; m.__prevState = null;
+      if (m.componentDidUpdate) { try { m.componentDidUpdate(m.props, prev); } catch (e) { console.error(e); } }
+    });
   }
 
   window.EBB = {

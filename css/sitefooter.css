@@ -19,6 +19,10 @@ body{margin:0}
 
 .sf-tag{color:#CDBDA3;font-size:16px}
 
+.sf-social{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#F2E5CF;text-decoration:none;font-weight:500;font-size:16px}
+
+.sf-social:hover{color:#D9A066}
+
 .sf-col{display:flex;flex-direction:column;gap:10px}
 
 .sf-head{font-family:"DM Mono","Courier New",monospace;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#D9A066}

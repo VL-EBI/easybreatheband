@@ -146,6 +146,12 @@ a:hover{color:#F2E5CF}
 
 .badge{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:999px;background:var(--amber);color:#1C1814;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 
+.song-photo{margin:20px 0 0;width:100%;max-width:250px;padding:10px 10px 12px;background:url(../assets/img/texture-paper.jpg) center/600px,#F2E5CF;border-radius:2px;box-shadow:0 24px 40px -22px rgba(0,0,0,.9);transform:rotate(-1.5deg)}
+
+.song:nth-child(even) .song-photo{transform:rotate(1.5deg)}
+
+.song-photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 30%;background:#261E18}
+
 .sheet{position:relative;padding:48px 52px 28px;background:url(../assets/img/texture-paper.jpg) center/600px,#F2E5CF;color:#1C1814;border-radius:2px;box-shadow:0 30px 50px -26px rgba(0,0,0,.85);column-count:2;column-gap:48px}
 
 .sheet .tape{top:-12px;left:50%;margin-left:-55px;transform:rotate(-3deg)}

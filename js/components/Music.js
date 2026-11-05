@@ -9,7 +9,7 @@ class Component extends DCLogic {
       'a-little-pressure': 'assets/audio/a-little-pressure.mp3',
       'leave-it-on': 'assets/audio/leave-it-on.mp3',
       'nothing-to-hide': 'assets/audio/nothing-to-hide.mp3',
-      'tomorrow-comes-in-a-box': ''
+      'tomorrow-comes-in-a-box': 'assets/audio/tomorrow-comes-in-a-box.mp3'
     };
   }
 
@@ -42,14 +42,10 @@ And nothing to hide.`;
 Nothing, nothing to hide.
 Oh my, oh my,
 You like me better when I don't try.`;
-    const tcChorus = `You couldn't watch me disappear,
-A little more with every year.
-Couldn't lie beside me, wide awake,
-And wonder which breath I wouldn't take.
-I said forever, you said when?
-I closed my eyes, you cried again.
-You didn't leave because you stopped loving me.
-You left because I wouldn't see.`;
+    const tcChorus = `I thought you wanted me to change.
+You just wanted me to stay.
+You were asking for tomorrow.
+I kept saying, "Not today."`;
     return [
       {
         id: 'a-little-pressure', title: 'A Little Pressure',
@@ -158,49 +154,41 @@ Nothing to hide.`]
         id: 'tomorrow-comes-in-a-box', title: 'Tomorrow Comes in a Box',
         desc: 'An aching song about regret, a relationship strained by avoidance and finally choosing to take the first step.',
         lyrics: [
-          ['Verse 1', `You used to wake me in the middle of the night,
-Say, "Baby, something about your breathing isn't right."
-I'd laugh and pull you closer, say, "I'm fine, go back to sleep."
-While you lay there in the darkness,
-Counting breaths I couldn't keep.
-You made the calls, you found the names,
+          ['Verse 1', `You'd wake me in the middle of the night,
+Say, "Baby, your breathing isn't right."
+I'd pull you close, say, "Go to sleep,"
+While you counted breaths I couldn't keep.
+
+You made the calls, you found the names;
 I found a hundred reasons.
 Said I'd get around to it,
 Like there'd always be another season.`],
-          ['Pre-Chorus', `I thought you wanted me to change.
-You just wanted me to stay.`],
           ['Chorus', tcChorus],
           ['Verse 2', `Your coffee cup's still by the sink,
 Your sweater's on the chair.
 Funny how a house can hold
 So much of someone who's not there.
-I used to call you worried,
-Said you made too much of things.
-Now I hear the silence
-And the truth that silence brings.`],
-          ['Pre-Chorus', `You weren't asking for a promise.
-You were asking me to try.`],
+
+I said you worried far too much
+About a little noise.
+Now I'd give up all this quiet
+Just to hear your voice.`],
           ['Chorus', tcChorus],
-          ['Bridge', `I found the note you left me,
-Folded underneath the phone.
+          ['Bridge', `You didn't leave because you stopped loving me.
+You left because I wouldn't see.
+
+I found the note you left me,
+Folded underneath the phone:
 "Please take care of yourself,
 Even if you do it alone."
+
 And for once I didn't argue.
 Didn't say you had it wrong.
 Just sat there with your handwriting
 Till the morning came along.`],
-          ['Final Chorus', `I know why you had to leave,
-And what it cost to love me.
-I can't undo those sleepless nights,
-Or ask you to come running back to me.
-But there's a little light beneath the door,
-And I ain't waiting anymore.
-I can't promise you forever.
-I can promise you I'll try.`],
+          ['Final Chorus', tcChorus],
           ['Outro', `My home sleep test comes tomorrow.
-I still have your number in my phone.
-I don't know if you'll answer.
-But I won't face this alone.`]
+I still have your number in my phone.`]
         ]
       }
     ];
@@ -286,6 +274,12 @@ But I won't face this alone.`]
       if (st.loadError === i) return 'This recording couldn’t be loaded.';
       return '';
     };
+    const photos = [
+      ['assets/img/gallery/live-stage.jpg', 'The full band on stage in a brick-walled room, all four wearing CPAP masks.'],
+      ['assets/img/gallery/cal-ben-duo.jpg', 'Cal on acoustic guitar and Ben on keys sharing a smile mid-song.'],
+      ['assets/img/gallery/nina-stage.jpg', 'Nina playing her sunburst bass on stage, wearing nasal pillows.'],
+      ['assets/img/gallery/band-sofa.jpg', 'The four band members laughing together on a sofa with coffee mugs.']
+    ];
     const tracks = songs.map((s, i) => {
       const isSel = i === st.selected;
       const isPlaying = isSel && st.playing;
@@ -306,6 +300,8 @@ But I won't face this alone.`]
         metaShort: available ? (len || '—') : 'Lyrics only for now',
         metaLong: available ? len : statusFor(i),
         play: () => this.playTrack(i),
+        photo: photos[i][0],
+        photoAlt: photos[i][1],
         sections: s.lyrics.map((l) => ({ label: l[0], hasLabel: !!l[0], text: l[1] }))
       };
     });
