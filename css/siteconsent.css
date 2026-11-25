@@ -1,0 +1,47 @@
+/* SiteConsent styles */
+body{margin:0}
+
+.sk{container-type:inline-size;container-name:sk;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:0 16px 16px;pointer-events:none;font-family:"Karla",system-ui,sans-serif}
+
+.sk *{box-sizing:border-box}
+
+:where(.sk) :is(p,h2,ul){margin:0}
+
+.sk-card{pointer-events:auto;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 28px;align-items:center;width:100%;max-width:1040px;margin:0 auto;padding:20px 24px;border-radius:12px;background:#2B211A;border:1px solid rgba(242,229,207,.22);box-shadow:0 24px 48px -16px rgba(0,0,0,.85);color:#F2E5CF}
+
+.sk-text{display:flex;flex-direction:column;gap:6px;min-width:0}
+
+.sk h2{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:21px;line-height:1.2;color:#F2E5CF;font-variation-settings:"SOFT" 100,"WONK" 1}
+
+.sk-body{font-size:16px;line-height:1.5;color:#D9CBB2}
+
+.sk-more{align-self:flex-start;display:inline-flex;align-items:center;min-height:32px;padding:0;border:0;background:none;color:#D9A066;font:inherit;font-size:15px;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+.sk-more:hover{color:#F2E5CF}
+
+.sk-details{display:flex;flex-direction:column;gap:8px;margin-top:4px;padding:14px 16px;border-radius:8px;background:rgba(28,24,20,.6);font-size:15px;line-height:1.5;color:#D9CBB2}
+
+.sk-details ul{padding-left:20px}
+
+.sk-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+
+.sk-btn{display:inline-flex;align-items:center;justify-content:center;min-width:132px;min-height:48px;padding:10px 22px;border-radius:999px;border:1px solid #C78B4C;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+
+.sk-yes{background:#C78B4C;color:#1C1814}
+
+.sk-yes:hover{background:#D9A066;border-color:#D9A066}
+
+.sk-no{background:transparent;color:#F2E5CF;border-color:rgba(242,229,207,.45)}
+
+.sk-no:hover{border-color:#F2E5CF;background:rgba(242,229,207,.08)}
+
+.sk :focus-visible{outline:3px solid #D9A066;outline-offset:3px}
+
+@container sk (max-width: 700px){
+  .sk-card{grid-template-columns:minmax(0,1fr);padding:18px 18px 16px}
+
+  .sk-actions{justify-content:stretch}
+
+  .sk-btn{flex:1 1 0;min-width:0}
+
+}

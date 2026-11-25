@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- On GitHub Pages project sites (user.github.io/repo/), uncomment and set the repo path so assets load from any URL: -->
 <!-- <base href="/your-repo-name/"> -->
-<script>(function(){var r=location.pathname;if(/\.html$/i.test(r))return;var p=r.toLowerCase().replace(/\/+$/,'');if(!/\/thanksgiving$/.test(p))return;var t=(r===p)?p+'.html':p;location.replace(t+location.search+location.hash);})();</script>
+<script>(function(){var r=location.pathname;if(/\.html$/i.test(r))return;var p=r.toLowerCase().replace(/\/+$/,'');if(!/\/(thanksgiving)$/.test(p))return;var t=(r===p)?p+'.html':p;location.replace(t+location.search+location.hash);})();</script>
 <title>Page not found — EBB</title>
 <meta name="description" content="Page not found.">
 <meta property="og:title" content="Page not found — EBB">
@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="css/siteseason.css?v=ebb-thanksgiving-20261124-v1">
 <link rel="stylesheet" href="css/sitectas.css?v=ebb-thanksgiving-20261124-v1">
 <link rel="stylesheet" href="css/sitefooter.css?v=ebb-thanksgiving-20261124-v1">
+<link rel="stylesheet" href="css/siteconsent.css?v=ebb-thanksgiving-20261124-v1">
 <link rel="stylesheet" href="css/notfound.css?v=ebb-thanksgiving-20261124-v1">
 </head>
 <body>
@@ -151,8 +152,27 @@
 </nav>
 </div>
 <p class="sf-disclosure">A fictional band and AI music project from Easy Breathe. The band's stories are not real customer testimonials, medical advice or promises of a particular result.</p>
+<button type="button" class="sf-privacy">Analytics choices</button>
 </div>
 </footer>
+</div>
+<div data-comp="SiteConsent" style="display: contents;">
+
+<div class="sk" role="region" aria-label="Analytics choice">
+<div class="sk-card">
+<div class="sk-text">
+<h2>Help us improve this site?</h2>
+<p class="sk-body">With your OK, we’ll count visits, clicks and which songs get played, so we know what people enjoy. It’s anonymous, stays with Easy Breathe and is never used for ads.</p>
+<button type="button" class="sk-more" aria-expanded="false" aria-controls="sk-details">What we collect</button>
+
+</div>
+<div class="sk-actions">
+<button type="button" class="sk-btn sk-no">No thanks</button>
+<button type="button" class="sk-btn sk-yes">Allow</button>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 </div></div>
@@ -266,8 +286,38 @@
 </nav>
 </div>
 <p class="sf-disclosure">A fictional band and AI music project from Easy Breathe. The band's stories are not real customer testimonials, medical advice or promises of a particular result.</p>
+<button type="button" class="sf-privacy" onClick="{{openPrivacy}}">Analytics choices</button>
 </div>
 </footer>
+</template>
+<template id="tpl-SiteConsent">
+<sc-if value="{{show}}" hint-placeholder-val="{{ true }}">
+<div class="sk" role="region" aria-label="Analytics choice">
+<div class="sk-card">
+<div class="sk-text">
+<h2>Help us improve this site?</h2>
+<p class="sk-body">With your OK, we’ll count visits, clicks and which songs get played, so we know what people enjoy. It’s anonymous, stays with Easy Breathe and is never used for ads.</p>
+<button type="button" class="sk-more" onClick="{{toggleMore}}" aria-expanded="{{moreExpanded}}" aria-controls="sk-details">{{moreLabel}}</button>
+<sc-if value="{{moreOpen}}" hint-placeholder-val="{{ false }}">
+<div class="sk-details" id="sk-details">
+<p>If you allow it, we record:</p>
+<ul>
+<li>the pages you visit and how far you scroll</li>
+<li>the links and buttons you click, and roughly where on the page</li>
+<li>the songs you play and how much of each you hear</li>
+<li>the website you came from and your screen size</li>
+</ul>
+<p>We don’t collect your name, email address or IP address, and nothing is shared with other companies. Your choice and a temporary visit ID are stored in this browser. Change your mind anytime with “Analytics choices” at the bottom of any page.</p>
+</div>
+</sc-if>
+</div>
+<div class="sk-actions">
+<button type="button" class="sk-btn sk-no" onClick="{{decline}}">No thanks</button>
+<button type="button" class="sk-btn sk-yes" onClick="{{accept}}">Allow</button>
+</div>
+</div>
+</div>
+</sc-if>
 </template>
 <template id="tpl-NotFound">
 <div class="pg">
@@ -292,6 +342,7 @@
 <dc-import name="SiteCtas" hint-size="100%,760px"></dc-import>
 </main>
 <dc-import name="SiteFooter" hint-size="100%,520px"></dc-import>
+<dc-import name="SiteConsent" hint-size="100%,0px"></dc-import>
 </div>
 </template>
 <script src="js/ebb-config.js"></script>
@@ -300,6 +351,7 @@
 <script src="js/components/SiteSeason.js?v=ebb-thanksgiving-20261124-v1"></script>
 <script src="js/components/SiteCtas.js?v=ebb-thanksgiving-20261124-v1"></script>
 <script src="js/components/SiteFooter.js?v=ebb-thanksgiving-20261124-v1"></script>
+<script src="js/components/SiteConsent.js?v=ebb-thanksgiving-20261124-v1"></script>
 <script src="js/components/NotFound.js?v=ebb-thanksgiving-20261124-v1"></script>
 <script>EBB.start("NotFound", document.getElementById('root'));</script>
 </body>

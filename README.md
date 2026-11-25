@@ -13,6 +13,8 @@ No build step and no dependencies: plain HTML, CSS and JavaScript that runs on G
 | `about.html` | About the Project (full story and disclosures) |
 | `contact.html` | Contact |
 | `404.html` | Page not found (also sends `/thanksgiving/` and other spellings to the Thanksgiving page) |
+| `analytics.html` | Locked analytics dashboard at `/analytics` (not linked; needs the access code) |
+| `hold.html` | Forwards to the Thanksgiving page, tagged as hold-music traffic (for the voiceover address `/hold`) |
 | `thanksgiving.html` | Thanksgiving songs, lyrics and photos. Live at `/thanksgiving` (GitHub Pages serves `.html` pages without the extension) |
 
 ## Run it locally
@@ -58,13 +60,16 @@ The same page also includes `<template>` blocks and a matching component script.
 
 If you change text in a page's template or component script, also update the prerendered copy inside that page's `<div id="root">`, or simply delete the prerendered markup inside `#root` (the page will then render it with JavaScript on load).
 
-## Analytics
+## Analytics (opt-in, self-hosted)
 
-Not included yet. Opt-in, self-hosted tracking is designed and will be added in a later update.
+- Built in but **switched off** until you set `analyticsEndpoint` in `js/ebb-config.js` to your own analytics service (the separate `ebb-analytics-cloudflare` folder has the Cloudflare Worker and setup steps).
+- The dashboard is at `/analytics` (`analytics.html`). It isn't linked anywhere, asks search engines not to list it, and only shows numbers after the analytics service accepts the access code.
+- Once switched on, visitors see a "Help us improve this site?" bar and nothing is recorded unless they tap **Allow**. Browsers that send Global Privacy Control are treated as "No thanks". The footer's **Analytics choices** link lets anyone change their answer.
+- `/hold` forwards to the Thanksgiving page tagged as hold-music traffic (`?utm_source=hold-music`), so phone-line visits can be counted separately.
 
 ## Seasonal: Thanksgiving
 
-- The page lives at `/thanksgiving` and is announced in the hold music. It is not in the main menu; the Thanksgiving banner on every other page links to it.
+- The page lives at `/thanksgiving` and is linked from the hold music. It is not in the main menu.
 - Every other page shows a Thanksgiving banner under the header linking to it. To hide it everywhere after the holiday, open `js/components/SiteSeason.js` and change `show: true` to `show: false`. (The prerendered copy in each page's `#root` is replaced as soon as the page loads; to remove it from the HTML too, delete the `<aside class="ss">` block inside each page's `#root`.)
 - The page itself can stay up; it only links to the rest of the site.
 
@@ -74,7 +79,7 @@ Image, stylesheet and component script references carry `?v=ebb-refresh-20261124
 
 ## Settings file
 
-`js/ebb-config.js` holds the Klaviyo settings for the Easy Breathe newsletter signup on Home and Contact: `klaviyoCompanyId` (public API key) and `klaviyoListId`. Leave either empty to switch the signup off.
+`js/ebb-config.js` holds the three settings that connect outside services: `analyticsEndpoint` (your analytics service), and `klaviyoCompanyId` + `klaviyoListId` (the Easy Breathe newsletter signup on Home and Contact). Leave a value empty to keep that feature off.
 
 ## Configuration: links and connections still to finish
 
@@ -83,7 +88,7 @@ Image, stylesheet and component script references carry `?v=ebb-refresh-20261124
 | $150 home sleep test link | `js/components/SiteCtas.js` and `js/components/SiteFooter.js` (`testUrl`) | **Temporary**: points to https://easybreathe.com/. Replace with the $150 offer page before going public. |
 | Insurance coverage check link | same files (`insuranceUrl`) | https://insurance.easybreathe.com/ |
 | Easy Breathe store link | `js/components/SiteFooter.js` (`storeUrl`), `contact.html` | https://easybreathe.com/ |
-| Easy Breathe newsletter signup (Klaviyo) | `js/ebb-config.js` (`klaviyoCompanyId`, `klaviyoListId`) | Connected to the Easy Breathe CPAP newsletter list (single opt-in). Signups go straight to Klaviyo's subscription API; no Klaviyo tracking script is loaded. |
+| Easy Breathe newsletter signup (Klaviyo) | `js/ebb-config.js` (`klaviyoCompanyId`, `klaviyoListId`) | Not connected yet: the forms on Home and Contact show "Email signup coming soon". Add the Klaviyo public API key and list ID. Signups go straight to Klaviyo's subscription API; no Klaviyo tracking script is loaded. |
 | Contact form | `js/components/Contact.js` (`contactEmail`, `contactEndpoint`) | Works now: opens the visitor's email app addressed to easybreatheband@easybreathe.com with their message filled in. Optional: add a form endpoint (POST JSON `{ name, email, topic, message }`) to send without the email app. |
 | Home page "Contact the team" | `js/components/Main.js` (`projectContactUrl`) | mailto:easybreatheband@easybreathe.com |
 | Social links | `instagramUrl`, `tiktokUrl`, `youtubeUrl` in `Main.js` and `Contact.js`; Instagram also in `SiteFooter.js` template | Instagram set to @easybreatheband. TikTok and YouTube not set (hidden until they have a URL). |
