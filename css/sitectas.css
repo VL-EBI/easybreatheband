@@ -54,6 +54,13 @@ body{margin:0}
 
 .sc-note{margin-top:20px;font-size:15px;color:#CDBDA3}
 
+/* tone="pine" (Christmas page): green instead of the wood texture, so it doesn't run into the footer */
+.sc.sc--pine{background:url(../assets/img/texture-grain.png) repeat,radial-gradient(900px 420px at 85% 0%,rgba(229,124,112,.14),transparent 60%),radial-gradient(1000px 520px at 0% 100%,rgba(0,0,0,.35),transparent 65%),#1F3A2A}
+
+.sc--pine .sc-lede,.sc--pine .sc-note{color:#D7DCCB}
+
+.sc--pine .sc-card--olive{background:#9B2F2F;box-shadow:0 28px 44px -24px rgba(0,0,0,.85)}
+
 @container sc (max-width: 640px){
   .sc{padding:56px 0}
 

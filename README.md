@@ -60,11 +60,12 @@ The same page also includes `<template>` blocks and a matching component script.
 
 If you change text in a page's template or component script, also update the prerendered copy inside that page's `<div id="root">`, or simply delete the prerendered markup inside `#root` (the page will then render it with JavaScript on load).
 
-## Analytics (opt-in, self-hosted)
+## Analytics (self-hosted, on by default with an easy opt-out)
 
-- Built in but **switched off** until you set `analyticsEndpoint` in `js/ebb-config.js` to your own analytics service (the separate `ebb-analytics-cloudflare` folder has the Cloudflare Worker and setup steps).
+- Connected to Easy Breathe's Cloudflare Worker through `analyticsEndpoint` in `js/ebb-config.js`; empty it to switch analytics off (the separate `ebb-analytics-cloudflare` folder has the Cloudflare Worker and setup steps).
 - The dashboard is at `/analytics` (`analytics.html`). It isn't linked anywhere, asks search engines not to list it, and only shows numbers after the analytics service accepts the access code.
-- Once switched on, visitors see a "Help us improve this site?" bar and nothing is recorded unless they tap **Allow**. Browsers that send Global Privacy Control are treated as "No thanks". The footer's **Analytics choices** link lets anyone change their answer.
+- Analytics are on by default with no banner. Anyone can turn them off (or back on) with **Analytics choices** in the footer; the choice is saved in their browser. Browsers that send Global Privacy Control aren't tracked unless the visitor turns analytics on.
+- `/privacy` (`privacy.html`) is the privacy and analytics notice, linked from every page's footer. Have compliance review its wording before changing it.
 - `/hold` forwards to the Thanksgiving page tagged as hold-music traffic (`?utm_source=hold-music`), so phone-line visits can be counted separately.
 
 ## Seasonal: Thanksgiving

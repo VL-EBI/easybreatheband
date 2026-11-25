@@ -1,9 +1,10 @@
 /* SiteConsent component */
 EBB.define("SiteConsent", (function () {
 class Component extends DCLogic {
-  // ===== Opt-in analytics (no third parties) =====
-  // Events go only to Easy Breathe's own collection service (see analytics-server/ in the export).
-  // While endpoint is empty, nothing is tracked and this bar never appears.
+  // ===== Site analytics (no third parties), on by default with an easy opt-out =====
+  // Events go only to Easy Breathe's own collection service (Cloudflare Worker, set in js/ebb-config.js).
+  // Off when the visitor turns it off ("Analytics choices" in the footer), or when the browser sends
+  // Global Privacy Control (unless the visitor turns it back on here). While endpoint is empty, nothing runs.
   config() {
     return {
       // set analyticsEndpoint in js/ebb-config.js on the published site, e.g. 'https://stats.easybreathe.com'
@@ -13,7 +14,7 @@ class Component extends DCLogic {
     };
   }
 
-  state = { choice: null, moreOpen: false, reopened: false };
+  state = { choice: null, gpc: false, reopened: false };
 
   readChoice() {
     try { return localStorage.getItem(this.config().storageKey); } catch (e) { return null; }
@@ -28,27 +29,34 @@ class Component extends DCLogic {
     const cfg = this.config();
     if (!cfg.endpoint) return;
     document.documentElement.setAttribute('data-ebb-analytics', 'on');  // reveals the footer's "Analytics choices" link
-    this.onReopen = () => this.setState({ reopened: true, moreOpen: false });
+    this.onReopen = () => {
+      this.setState({ reopened: true });
+      setTimeout(() => { const h = document.getElementById('sk-title'); if (h) h.focus(); }, 0);
+    };
+    this.onKey = (e) => { if (e.key === 'Escape' && this.state.reopened) this.setState({ reopened: false }); };
     window.addEventListener('ebb:consent-open', this.onReopen);
-    const gpc = navigator.globalPrivacyControl === true;  // browser-level "do not sell or share" signal counts as no
-    const choice = gpc ? 'no' : this.readChoice();
-    this.setState({ choice: choice || 'ask' });
+    window.addEventListener('keydown', this.onKey);
+    const gpc = navigator.globalPrivacyControl === true;  // browser privacy signal: off unless turned on here
+    const saved = this.readChoice();
+    const choice = saved === 'yes' || saved === 'no' ? saved : (gpc ? 'no' : 'yes');
+    this.setState({ choice: choice, gpc: gpc });
     if (choice === 'yes') this.startTracking();
   }
 
   componentWillUnmount() {
     if (this.onReopen) window.removeEventListener('ebb:consent-open', this.onReopen);
+    if (this.onKey) window.removeEventListener('keydown', this.onKey);
   }
 
   accept() {
     this.saveChoice('yes');
-    this.setState({ choice: 'yes', reopened: false });
+    this.setState({ choice: 'yes' });
     this.startTracking();
   }
 
   decline() {
     this.saveChoice('no');
-    this.setState({ choice: 'no', reopened: false });
+    this.setState({ choice: 'no' });
     this.stopTracking();
   }
 
@@ -154,15 +162,20 @@ class Component extends DCLogic {
 
   renderVals() {
     const st = this.state;
-    const show = !!this.props.demo || st.choice === 'ask' || st.reopened;
+    const on = this.props.demo ? true : st.choice === 'yes';
+    const offText = st.gpc && this.readChoice() !== 'no'
+      ? 'Analytics are off because your browser sends a Global Privacy Control signal. Nothing about your visits is recorded. You can turn them on here if you like.'
+      : 'Analytics are off in this browser. Nothing about your visits is recorded.';
     return {
-      show: show,
-      moreOpen: st.moreOpen,
-      moreExpanded: st.moreOpen ? 'true' : 'false',
-      moreLabel: st.moreOpen ? 'Hide details' : 'What we collect',
-      toggleMore: () => this.setState({ moreOpen: !st.moreOpen }),
-      accept: () => { if (!this.props.demo) this.accept(); },
-      decline: () => { if (!this.props.demo) this.decline(); }
+      show: !!this.props.demo || st.reopened,
+      statusLabel: on ? 'On' : 'Off',
+      statusClass: on ? '' : 'is-off',
+      bodyText: on
+        ? 'We count visits, clicks and which songs get played so we know what people enjoy. It\u2019s anonymous, stays with Easy Breathe and is never used for ads.'
+        : offText,
+      toggleLabel: on ? 'Turn off' : 'Turn on',
+      toggle: () => { if (this.props.demo) return; if (on) this.decline(); else this.accept(); },
+      close: () => { if (!this.props.demo) this.setState({ reopened: false }); }
     };
   }
 }

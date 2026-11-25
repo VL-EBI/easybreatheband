@@ -9,6 +9,7 @@ class Component extends DCLogic {
     return {
       showTest: !single,
       wrapClass: single ? 'is-single' : '',
+      toneClass: this.props.tone === 'pine' ? 'sc--pine' : '',
       heading: single ? 'Using CPAP? Check your coverage.' : 'Ready for your own next step?',
       lede: single ? 'See what your insurance may cover for CPAP equipment and supplies.' : 'Interested in sleep apnea testing or checking your CPAP insurance coverage? Start here.',
       note: single ? 'This link opens Easy Breathe\'s website, where insurance information is handled.' : 'These links open Easy Breathe\'s website, where testing and insurance information is handled.',

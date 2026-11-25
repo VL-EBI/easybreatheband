@@ -146,7 +146,7 @@ async function load(pageSel) {
     if (!r.ok) throw new Error('The server answered ' + r.status + '.');
     d = await r.json();
   } catch (e) { app.innerHTML = `<p class="err">Couldn’t load the numbers. ${esc(e.message)} Refresh the page to try again.</p>`; return; }
-  document.getElementById('range-note').textContent = 'Visitors who allowed analytics · since ' + d.since + ' (UTC) · updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ', refreshes every minute';
+  document.getElementById('range-note').textContent = 'All visits except people who turned analytics off · since ' + d.since + ' (UTC) · updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ', refreshes every minute';
   const t = d.totals, f = d.funnel_thanksgiving;
   const scroll = Object.fromEntries(d.scroll.map((s) => [s.path, s]));
   const exits = Object.fromEntries(d.exits.map((x) => [x.path, x]));

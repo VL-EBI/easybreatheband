@@ -23,6 +23,18 @@ body{margin:0}
 
 .sk-details ul{padding-left:20px}
 
+.sk-status{display:inline-flex;align-items:center;gap:8px;font-family:"DM Mono","Courier New",monospace;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#D9A066}
+
+.sk-status::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+
+.sk-status.is-off{color:#B9A98F}
+
+.sk h2:focus{outline:none}
+
+.sk-link{align-self:flex-start;color:#D9A066;font-size:15px;font-weight:600;text-underline-offset:3px}
+
+.sk-link:hover{color:#F2E5CF}
+
 .sk-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
 
 .sk-btn{display:inline-flex;align-items:center;justify-content:center;min-width:132px;min-height:48px;padding:10px 22px;border-radius:999px;border:1px solid #C78B4C;font:inherit;font-size:16px;font-weight:700;cursor:pointer}

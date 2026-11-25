@@ -352,7 +352,7 @@ View lyrics
 </section>
 
 <div data-comp="SiteCtas" style="display: contents;">
-<section class="sc" id="next-step" aria-labelledby="sc-title">
+<section class="sc " id="next-step" aria-labelledby="sc-title">
 <div class="sc-wrap ">
 <div class="sc-head">
 <h2 id="sc-title">Ready for your own next step?</h2>
@@ -456,26 +456,14 @@ View lyrics
 </nav>
 </div>
 <p class="sf-disclosure">A fictional band and AI music project from Easy Breathe. The band's stories are not real customer testimonials, medical advice or promises of a particular result.</p>
+<div class="sf-legal">
+<a href="privacy.html">Privacy and analytics</a>
 <button type="button" class="sf-privacy">Analytics choices</button>
+</div>
 </div>
 </footer>
 </div>
 <div data-comp="SiteConsent" style="display: contents;">
-
-<div class="sk" role="region" aria-label="Analytics choice">
-<div class="sk-card">
-<div class="sk-text">
-<h2>Help us improve this site?</h2>
-<p class="sk-body">With your OK, we’ll count visits, clicks and which songs get played, so we know what people enjoy. It’s anonymous, stays with Easy Breathe and is never used for ads.</p>
-<button type="button" class="sk-more" aria-expanded="false" aria-controls="sk-details">What we collect</button>
-
-</div>
-<div class="sk-actions">
-<button type="button" class="sk-btn sk-no">No thanks</button>
-<button type="button" class="sk-btn sk-yes">Allow</button>
-</div>
-</div>
-</div>
 
 </div>
 
@@ -532,7 +520,7 @@ View lyrics
 </sc-if>
 </template>
 <template id="tpl-SiteCtas">
-<section class="sc" id="next-step" aria-labelledby="sc-title">
+<section class="sc {{toneClass}}" id="next-step" aria-labelledby="sc-title">
 <div class="sc-wrap {{wrapClass}}">
 <div class="sc-head">
 <h2 id="sc-title">{{heading}}</h2>
@@ -591,34 +579,26 @@ View lyrics
 </nav>
 </div>
 <p class="sf-disclosure">A fictional band and AI music project from Easy Breathe. The band's stories are not real customer testimonials, medical advice or promises of a particular result.</p>
+<div class="sf-legal">
+<a href="privacy.html">Privacy and analytics</a>
 <button type="button" class="sf-privacy" onClick="{{openPrivacy}}">Analytics choices</button>
+</div>
 </div>
 </footer>
 </template>
 <template id="tpl-SiteConsent">
 <sc-if value="{{show}}" hint-placeholder-val="{{ true }}">
-<div class="sk" role="region" aria-label="Analytics choice">
+<div class="sk" role="region" aria-label="Analytics choices">
 <div class="sk-card">
 <div class="sk-text">
-<h2>Help us improve this site?</h2>
-<p class="sk-body">With your OK, we’ll count visits, clicks and which songs get played, so we know what people enjoy. It’s anonymous, stays with Easy Breathe and is never used for ads.</p>
-<button type="button" class="sk-more" onClick="{{toggleMore}}" aria-expanded="{{moreExpanded}}" aria-controls="sk-details">{{moreLabel}}</button>
-<sc-if value="{{moreOpen}}" hint-placeholder-val="{{ false }}">
-<div class="sk-details" id="sk-details">
-<p>If you allow it, we record:</p>
-<ul>
-<li>the pages you visit and how far you scroll</li>
-<li>the links and buttons you click, and roughly where on the page</li>
-<li>the songs you play and how much of each you hear</li>
-<li>the website you came from and your screen size</li>
-</ul>
-<p>We don’t collect your name, email address or IP address, and nothing is shared with other companies. Your choice and a temporary visit ID are stored in this browser. Change your mind anytime with “Analytics choices” at the bottom of any page.</p>
-</div>
-</sc-if>
+<p class="sk-status {{statusClass}}">{{statusLabel}}</p>
+<h2 id="sk-title" tabindex="-1">Site analytics</h2>
+<p class="sk-body">{{bodyText}}</p>
+<a class="sk-link" href="privacy.html">Privacy and analytics notice</a>
 </div>
 <div class="sk-actions">
-<button type="button" class="sk-btn sk-no" onClick="{{decline}}">No thanks</button>
-<button type="button" class="sk-btn sk-yes" onClick="{{accept}}">Allow</button>
+<button type="button" class="sk-btn sk-no" onClick="{{close}}">Close</button>
+<button type="button" class="sk-btn sk-yes" onClick="{{toggle}}">{{toggleLabel}}</button>
 </div>
 </div>
 </div>
