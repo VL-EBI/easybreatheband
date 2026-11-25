@@ -1,7 +1,36 @@
 /* Contact component */
 EBB.define("Contact", (function () {
 class Component extends DCLogic {
-  state = { name: '', email: '', topic: 'General question', message: '', status: 'idle', invalid: {} };
+  state = { name: '', email: '', topic: 'General question', message: '', status: 'idle', invalid: {}, nlEmail: '', nlStatus: 'idle' };
+
+  // ===== Easy Breathe newsletter (Klaviyo) =====
+  // Uses Klaviyo's public subscription API so the form keeps this design and no Klaviyo tracking script loads.
+  // The IDs live in js/ebb-config.js on the published site (klaviyoCompanyId = public API key / site ID, klaviyoListId).
+  klaviyo() {
+    const c = (typeof window !== 'undefined' && window.EBB_CONFIG) || {};
+    return { company: c.klaviyoCompanyId || '', list: c.klaviyoListId || '' };
+  }
+
+  subscribe(email) {
+    const k = this.klaviyo();
+    return fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(k.company), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/vnd.api+json', 'Accept': 'application/vnd.api+json', 'revision': '2024-10-15' },
+      body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'easybreatheband.com', profile: { data: { type: 'profile', attributes: { email: email } } } }, relationships: { list: { data: { type: 'list', id: k.list } } } } })
+    }).then((r) => { if (!r.ok) throw new Error('signup failed'); });
+  }
+
+  onSubscribe(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const k = this.klaviyo();
+    if (!k.company || !k.list || this.state.nlStatus === 'loading') return;
+    const email = (this.state.nlEmail || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { this.setState({ nlStatus: 'invalid' }); return; }
+    this.setState({ nlStatus: 'loading' });
+    this.subscribe(email)
+      .then(() => this.setState({ nlStatus: 'success' }))
+      .catch(() => this.setState({ nlStatus: 'error' }));
+  }
 
   // ===== Contact configuration =====
   config() {
@@ -47,6 +76,8 @@ class Component extends DCLogic {
     if (s.status === 'error') { msg = 'Something went wrong. Please try again.'; msgClass = 'msg--error'; }
     if (s.status === 'success') { msg = 'Thanks — your message is on its way.'; msgClass = 'msg--success'; }
     const field = (k) => (e) => this.setState({ [k]: e.target.value });
+    const kl = this.klaviyo();
+    const nlOn = !!(kl.company && kl.list);
     const social = [
       { label: 'Instagram · @easybreatheband', url: cfg.instagramUrl },
       { label: 'TikTok', url: cfg.tiktokUrl },
@@ -64,7 +95,15 @@ class Component extends DCLogic {
       mailHref: 'mailto:' + cfg.contactEmail,
       mailText: cfg.contactEmail,
       msg: msg, msgClass: msgClass,
-      social: social, hasSocial: social.length > 0, noSocial: social.length === 0
+      social: social, hasSocial: social.length > 0, noSocial: social.length === 0,
+      nlEmail: s.nlEmail,
+      onNlEmail: (e) => this.setState({ nlEmail: e.target.value, nlStatus: s.nlStatus === 'invalid' || s.nlStatus === 'error' ? 'idle' : s.nlStatus }),
+      onSubscribe: (e) => this.onSubscribe(e),
+      nlInvalid: s.nlStatus === 'invalid' ? 'true' : 'false',
+      nlDisabled: !nlOn || s.nlStatus === 'loading',
+      nlBtn: s.nlStatus === 'loading' ? 'Signing up…' : 'Sign me up',
+      nlMsg: !nlOn ? 'Email signup coming soon.' : s.nlStatus === 'invalid' ? 'Please enter a valid email address.' : s.nlStatus === 'loading' ? 'Signing you up…' : s.nlStatus === 'error' ? 'Something went wrong. Please try again.' : s.nlStatus === 'success' ? 'You’re signed up. Watch your inbox for the Easy Breathe newsletter.' : '',
+      nlMsgClass: s.nlStatus === 'invalid' || s.nlStatus === 'error' ? 'nl-error' : s.nlStatus === 'success' ? 'nl-success' : ''
     };
   }
 }

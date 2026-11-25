@@ -6,15 +6,14 @@ class Component extends DCLogic {
   // ===== EBB CONFIGURATION — replace pending values here =====
   config() {
     return {
-      // Audio: paths to files in assets/audio/ (or hosted audio URLs). Empty = player disabled with an honest message.
+      // Audio: file paths or hosted audio URLs. Empty = player disabled with an honest message.
       audio: {
         'a-little-pressure': 'assets/audio/a-little-pressure.mp3',
         'leave-it-on': 'assets/audio/leave-it-on.mp3',
         'nothing-to-hide': 'assets/audio/nothing-to-hide.mp3',
         'tomorrow-comes-in-a-box': 'assets/audio/tomorrow-comes-in-a-box.mp3'
       },
-      // Easy Breathe testing/insurance/store links live in js/components/SiteCtas.js and js/components/SiteFooter.js.
-      newsletterEndpoint: '',   // signup endpoint; success shows only on a confirmed response
+      // Easy Breathe testing/insurance/store links live in js/components/SiteCtas.js and SiteFooter.js.
       projectContactUrl: 'mailto:easybreatheband@easybreathe.com',    // mailto: address or contact form URL
       instagramUrl: 'https://www.instagram.com/easybreatheband/',
       tiktokUrl: '',
@@ -71,7 +70,7 @@ There's always room at Easy Breathe."`],
           ['Pre-Chorus', `You heard the song beneath the doubt,
 Turned it up instead of tuning out.`],
           ['Chorus', alpChorus],
-          ['Verse 2', `See-pap humming by the bed,
+          ['Verse 2', `CPAP humming by the bed,
 A half-made song still in my head.
 I had some questions, quite a few;
 You sat with me and talked them through.
@@ -102,7 +101,7 @@ You make a joke, then let it go.
 You reach to take the mask away;
 I lean in close enough to say—`],
           ['Chorus', lioChorus],
-          ['Verse 2', `See-pap humming beside the bed,
+          ['Verse 2', `CPAP humming beside the bed,
 You pull my arm beneath your head.
 We used to talk till the sun came through;
 Now the quiet says a little, too.
@@ -139,7 +138,7 @@ I came home to be with you."`],
           ['Pre-Chorus', nthPre],
           ['Chorus', nthChorus],
           ['Post-Chorus', nthPost],
-          ['Verse 2', `See-pap humming by the bed,
+          ['Verse 2', `CPAP humming by the bed,
 All that fuss was in my head.
 Little hose and a bedside glow—
 That's the big secret. Now you know.
@@ -211,11 +210,16 @@ I still have your number in my phone.`]
   componentDidMount() {
     const a = new Audio();
     a.preload = 'metadata';
-    a.addEventListener('timeupdate', () => this.setState({ cur: a.currentTime || 0 }));
     a.addEventListener('loadedmetadata', () => this.setState({ dur: isFinite(a.duration) ? a.duration : 0 }));
-    a.addEventListener('play', () => this.setState({ playing: true }));
-    a.addEventListener('pause', () => this.setState({ playing: false }));
-    a.addEventListener('ended', () => this.setState({ playing: false, cur: 0 }));
+    // Let other parts of the page (the Thanksgiving banner's sound bars) know when music is playing.
+    // Also used by the site's opt-in analytics (song plays, pauses and how far people listen).
+    // The song is remembered when it starts, so a pause caused by switching tracks is credited to the right song.
+    const info = () => ({ song: this.playingSong || (this.songs()[this.state.selected] || {}).id, t: a.currentTime || 0, dur: isFinite(a.duration) ? a.duration : 0 });
+    const tell = (on, how) => { window.__ebbPlaying = on; window.dispatchEvent(new CustomEvent('ebb:audio', { detail: Object.assign({ playing: on, how: how }, info()) })); };
+    a.addEventListener('timeupdate', () => { this.setState({ cur: a.currentTime || 0 }); window.dispatchEvent(new CustomEvent('ebb:audio-time', { detail: info() })); });
+    a.addEventListener('play', () => { this.playingSong = (this.songs()[this.state.selected] || {}).id; this.setState({ playing: true }); tell(true, 'play'); });
+    a.addEventListener('pause', () => { if (!a.ended) tell(false, 'pause'); this.setState({ playing: false }); });
+    a.addEventListener('ended', () => { tell(false, 'ended'); this.setState({ playing: false, cur: 0 }); });
     a.addEventListener('error', () => { if (a.getAttribute('src')) this.setState({ playing: false, loadError: this.state.selected }); });
     this.audio = a;
     this.loadTrack(0);
@@ -274,15 +278,32 @@ I still have your number in my phone.`]
     return m + ':' + (s < 10 ? '0' : '') + s;
   }
 
+  // ===== Easy Breathe newsletter (Klaviyo) =====
+  // Uses Klaviyo's public subscription API so the form keeps this design and no Klaviyo tracking script loads.
+  // The IDs live in js/ebb-config.js on the published site (klaviyoCompanyId = public API key / site ID, klaviyoListId).
+  klaviyo() {
+    const c = (typeof window !== 'undefined' && window.EBB_CONFIG) || {};
+    return { company: c.klaviyoCompanyId || '', list: c.klaviyoListId || '' };
+  }
+
+  subscribe(email) {
+    const k = this.klaviyo();
+    return fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(k.company), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/vnd.api+json', 'Accept': 'application/vnd.api+json', 'revision': '2024-10-15' },
+      body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'easybreatheband.com', profile: { data: { type: 'profile', attributes: { email: email } } } }, relationships: { list: { data: { type: 'list', id: k.list } } } } })
+    }).then((r) => { if (!r.ok) throw new Error('signup failed'); });
+  }
+
   onSubscribe(e) {
     if (e && e.preventDefault) e.preventDefault();
-    const endpoint = this.config().newsletterEndpoint;
-    if (!endpoint || this.state.signupStatus === 'loading') return;
+    const k = this.klaviyo();
+    if (!k.company || !k.list || this.state.signupStatus === 'loading') return;
     const email = (this.state.email || '').trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { this.setState({ signupStatus: 'invalid' }); return; }
     this.setState({ signupStatus: 'loading' });
-    fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email }) })
-      .then((r) => { if (!r.ok) throw new Error('signup failed'); this.setState({ signupStatus: 'success' }); })
+    this.subscribe(email)
+      .then(() => this.setState({ signupStatus: 'success' }))
       .catch(() => this.setState({ signupStatus: 'error' }));
   }
 
@@ -335,7 +356,8 @@ I still have your number in my phone.`]
       { label: 'YouTube', url: cfg.youtubeUrl }
     ].filter((s) => !!s.url);
 
-    const connected = !!cfg.newsletterEndpoint;
+    const kl = this.klaviyo();
+    const connected = !!(kl.company && kl.list);
     const ss = st.signupStatus;
     let signupMsg = 'Email signup coming soon.';
     let signupMsgClass = '';
@@ -344,7 +366,7 @@ I still have your number in my phone.`]
       if (ss === 'invalid') { signupMsg = 'Please enter a valid email address.'; signupMsgClass = 'msg--error'; }
       if (ss === 'loading') signupMsg = 'Signing you up…';
       if (ss === 'error') { signupMsg = 'Something went wrong. Please try again.'; signupMsgClass = 'msg--error'; }
-      if (ss === 'success') { signupMsg = 'You’re in. Watch your inbox for EBB updates.'; signupMsgClass = 'msg--success'; }
+      if (ss === 'success') { signupMsg = 'You’re signed up. Watch your inbox for the Easy Breathe newsletter.'; signupMsgClass = 'msg--success'; }
     }
 
     return {
@@ -375,7 +397,7 @@ I still have your number in my phone.`]
       onSubscribe: (e) => this.onSubscribe(e),
       emailInvalid: ss === 'invalid' ? 'true' : 'false',
       signupDisabled: !connected || ss === 'loading',
-      signupBtn: ss === 'loading' ? 'Signing up…' : 'Keep me in the loop',
+      signupBtn: ss === 'loading' ? 'Signing up…' : 'Sign me up',
       signupMsg: signupMsg,
       signupMsgClass: signupMsgClass,
 

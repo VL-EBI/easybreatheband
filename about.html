@@ -7,16 +7,20 @@
 <meta name="description" content="The band is fictional. The reason behind it is real. The story behind EBB, a creative project from Easy Breathe.">
 <meta property="og:title" content="About the Project — EBB">
 <meta property="og:description" content="The band is fictional. The reason behind it is real. The story behind EBB, a creative project from Easy Breathe.">
-<meta property="og:image" content="assets/img/ebb-band-masked.jpg">
+<meta property="og:image" content="https://easybreatheband.com/assets/img/ebb-band-masked.jpg?v=ebb-mask-fit-20261124-v3">
+<meta property="og:image:width" content="1774">
+<meta property="og:image:height" content="887">
+<meta property="og:image:alt" content="EBB members Cal Benton, Nina Brooks, Ben Halton and Tom Kellan wearing CPAP masks in their rehearsal studio.">
 <meta name="theme-color" content="#1C1814">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Karla:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/siteheader.css">
-<link rel="stylesheet" href="css/sitectas.css">
-<link rel="stylesheet" href="css/sitefooter.css">
-<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/siteheader.css?v=ebb-thanksgiving-20261124-v1">
+<link rel="stylesheet" href="css/siteseason.css?v=ebb-thanksgiving-20261124-v1">
+<link rel="stylesheet" href="css/sitectas.css?v=ebb-thanksgiving-20261124-v1">
+<link rel="stylesheet" href="css/sitefooter.css?v=ebb-thanksgiving-20261124-v1">
+<link rel="stylesheet" href="css/about.css?v=ebb-thanksgiving-20261124-v1">
 </head>
 <body>
 <div id="root"><!--PRERENDER--><div data-comp="About" style="display: contents;">
@@ -52,6 +56,21 @@
 </div>
 </header>
 </div>
+<div data-comp="SiteSeason" style="display: contents;">
+
+<aside class="ss" aria-label="Thanksgiving songs">
+<div class="ss-in">
+<div class="ss-msg">
+<span class="ss-eq " aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+<span class="ss-chip">New</span>
+<p class="ss-text"><strong>Happy Thanksgiving from EBB.</strong> Three new songs for the holiday, with full lyrics.</p>
+</div>
+<a class="ss-btn" href="thanksgiving.html">Listen now
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</aside>
+
+</div>
 <main class="paper">
 
 <section class="ah" aria-labelledby="ah-title">
@@ -74,7 +93,7 @@
 <p>We also know there can be hesitation. Wearing a mask. Sleeping beside someone. Wondering what other people will think. Something that helps you can still feel like something you need to hide.</p>
 <p class="pull">We want to help change that.</p>
 <figure class="story-photo">
-<img src="assets/img/gallery/live-crowd.jpg" alt="EBB performing for a smiling crowd, some wearing CPAP masks." loading="lazy">
+<img src="assets/img/gallery/live-crowd.jpg?v=ebb-mask-fit-20261124-v3" width="1122" height="1402" alt="EBB performing under an Easy Breathe Band banner; Nina Brooks faces the front row while playing bass, and all four members and some fans wear CPAP masks." loading="lazy">
 <figcaption>A full room, masks and all. (A fictional scene.)</figcaption>
 </figure>
 <p>We’re continually struck by how many people who may need help with sleep apnea haven’t been tested or started treatment. We hope this music starts conversations, makes people feel less alone, and encourages more people to explore testing and treatment with a healthcare professional.</p>
@@ -94,12 +113,13 @@
 </main>
 <div data-comp="SiteCtas" style="display: contents;">
 <section class="sc" id="next-step" aria-labelledby="sc-title">
-<div class="sc-wrap">
+<div class="sc-wrap ">
 <div class="sc-head">
 <h2 id="sc-title">Ready for your own next step?</h2>
 <p class="sc-lede">Interested in sleep apnea testing or checking your CPAP insurance coverage? Start here.</p>
 </div>
 <div class="sc-grid">
+
 <article class="sc-card">
 <p class="sc-kicker">Home sleep test</p>
 <p class="sc-price">$150</p>
@@ -108,6 +128,7 @@
 <a class="sc-btn" href="https://easybreathe.com/" target="_blank" rel="noopener">Get tested at home for $150
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
 </article>
+
 <article class="sc-card sc-card--olive">
 <p class="sc-kicker">Insurance check</p>
 <h3>See what your insurance may cover.</h3>
@@ -190,14 +211,30 @@
 </div>
 </header>
 </template>
+<template id="tpl-SiteSeason">
+<sc-if value="{{show}}" hint-placeholder-val="{{ true }}">
+<aside class="ss" aria-label="Thanksgiving songs">
+<div class="ss-in">
+<div class="ss-msg">
+<span class="ss-eq {{eqClass}}" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+<span class="ss-chip">New</span>
+<p class="ss-text"><strong>Happy Thanksgiving from EBB.</strong> Three new songs for the holiday, with full lyrics.</p>
+</div>
+<a class="ss-btn" href="thanksgiving.html">Listen now
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</aside>
+</sc-if>
+</template>
 <template id="tpl-SiteCtas">
 <section class="sc" id="next-step" aria-labelledby="sc-title">
-<div class="sc-wrap">
+<div class="sc-wrap {{wrapClass}}">
 <div class="sc-head">
-<h2 id="sc-title">Ready for your own next step?</h2>
-<p class="sc-lede">Interested in sleep apnea testing or checking your CPAP insurance coverage? Start here.</p>
+<h2 id="sc-title">{{heading}}</h2>
+<p class="sc-lede">{{lede}}</p>
 </div>
 <div class="sc-grid">
+<sc-if value="{{showTest}}" hint-placeholder-val="{{ true }}">
 <article class="sc-card">
 <p class="sc-kicker">Home sleep test</p>
 <p class="sc-price">$150</p>
@@ -206,6 +243,7 @@
 <a class="sc-btn" href="{{testUrl}}" target="_blank" rel="noopener">Get tested at home for $150
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
 </article>
+</sc-if>
 <article class="sc-card sc-card--olive">
 <p class="sc-kicker">Insurance check</p>
 <h3>See what your insurance may cover.</h3>
@@ -214,7 +252,7 @@
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
 </article>
 </div>
-<p class="sc-note">These links open Easy Breathe's website, where testing and insurance information is handled.</p>
+<p class="sc-note">{{note}}</p>
 </div>
 </section>
 </template>
@@ -254,6 +292,7 @@
 <template id="tpl-About">
 <div class="pg">
 <dc-import name="SiteHeader" active="about" hint-size="100%,77px"></dc-import>
+<dc-import name="SiteSeason" hint-size="100%,76px"></dc-import>
 <main class="paper">
 
 <section class="ah" aria-labelledby="ah-title">
@@ -276,7 +315,7 @@
 <p>We also know there can be hesitation. Wearing a mask. Sleeping beside someone. Wondering what other people will think. Something that helps you can still feel like something you need to hide.</p>
 <p class="pull">We want to help change that.</p>
 <figure class="story-photo">
-<img src="assets/img/gallery/live-crowd.jpg" alt="EBB performing for a smiling crowd, some wearing CPAP masks." loading="lazy">
+<img src="assets/img/gallery/live-crowd.jpg?v=ebb-mask-fit-20261124-v3" width="1122" height="1402" alt="EBB performing under an Easy Breathe Band banner; Nina Brooks faces the front row while playing bass, and all four members and some fans wear CPAP masks." loading="lazy">
 <figcaption>A full room, masks and all. (A fictional scene.)</figcaption>
 </figure>
 <p>We’re continually struck by how many people who may need help with sleep apnea haven’t been tested or started treatment. We hope this music starts conversations, makes people feel less alone, and encourages more people to explore testing and treatment with a healthcare professional.</p>
@@ -298,11 +337,13 @@
 <dc-import name="SiteFooter" hint-size="100%,520px"></dc-import>
 </div>
 </template>
+<script src="js/ebb-config.js"></script>
 <script src="js/dc-lite.js"></script>
-<script src="js/components/SiteHeader.js"></script>
-<script src="js/components/SiteCtas.js"></script>
-<script src="js/components/SiteFooter.js"></script>
-<script src="js/components/About.js"></script>
+<script src="js/components/SiteHeader.js?v=ebb-thanksgiving-20261124-v1"></script>
+<script src="js/components/SiteSeason.js?v=ebb-thanksgiving-20261124-v1"></script>
+<script src="js/components/SiteCtas.js?v=ebb-thanksgiving-20261124-v1"></script>
+<script src="js/components/SiteFooter.js?v=ebb-thanksgiving-20261124-v1"></script>
+<script src="js/components/About.js?v=ebb-thanksgiving-20261124-v1"></script>
 <script>EBB.start("About", document.getElementById('root'));</script>
 </body>
 </html>

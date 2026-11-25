@@ -102,6 +102,12 @@ a:hover{color:#F2E5CF}
 
 .fine{font-size:14px;color:#BDAE95}
 
+.fine.nl-error{color:#F0A58C}
+
+.fine.nl-success{color:#B9CFA0}
+
+.signup-row input[aria-invalid="true"]{border-color:#E8937A}
+
 @container pg (max-width: 1000px){
   .cgrid{grid-template-columns:minmax(0,1fr)}
 

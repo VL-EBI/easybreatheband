@@ -12,7 +12,8 @@ No build step and no dependencies: plain HTML, CSS and JavaScript that runs on G
 | `band.html` | Meet the Band, including the photo gallery (full-screen viewer) |
 | `about.html` | About the Project (full story and disclosures) |
 | `contact.html` | Contact |
-| `404.html` | Page not found |
+| `404.html` | Page not found (also sends `/thanksgiving/` and other spellings to the Thanksgiving page) |
+| `thanksgiving.html` | Thanksgiving songs, lyrics and photos. Live at `/thanksgiving` (GitHub Pages serves `.html` pages without the extension) |
 
 ## Run it locally
 
@@ -38,8 +39,10 @@ The empty `.nojekyll` file tells GitHub Pages to serve the files as they are.
 ## Folder structure
 
 ```
-assets/img/        band portraits, logos (cream + brown), textures, favicon
+assets/img/         group portraits, logos (cream + brown), textures, favicon
 assets/img/gallery/ gallery and page photos (used on Meet the Band, Home, Music and About)
+assets/img/members/ mask-on / mask-off portraits for each member (Meet the Band)
+assets/img/thanksgiving/ seasonal photos for the Thanksgiving page
 assets/audio/      song recordings (MP3)
 css/               one stylesheet per page or shared part
 js/dc-lite.js      small renderer that powers templates and interactivity
@@ -55,6 +58,24 @@ The same page also includes `<template>` blocks and a matching component script.
 
 If you change text in a page's template or component script, also update the prerendered copy inside that page's `<div id="root">`, or simply delete the prerendered markup inside `#root` (the page will then render it with JavaScript on load).
 
+## Analytics
+
+Not included yet. Opt-in, self-hosted tracking is designed and will be added in a later update.
+
+## Seasonal: Thanksgiving
+
+- The page lives at `/thanksgiving` and is announced in the hold music. It is not in the main menu; the Thanksgiving banner on every other page links to it.
+- Every other page shows a Thanksgiving banner under the header linking to it. To hide it everywhere after the holiday, open `js/components/SiteSeason.js` and change `show: true` to `show: false`. (The prerendered copy in each page's `#root` is replaced as soon as the page loads; to remove it from the HTML too, delete the `<aside class="ss">` block inside each page's `#root`.)
+- The page itself can stay up; it only links to the rest of the site.
+
+## Cache versioning
+
+Image, stylesheet and component script references carry `?v=ebb-refresh-20261124` so returning visitors get the refreshed lineup photos. If you replace an image again under the same file name, change that version string everywhere (it is set once as `VER` in the build and appears in the HTML, CSS and JS).
+
+## Settings file
+
+`js/ebb-config.js` holds the Klaviyo settings for the Easy Breathe newsletter signup on Home and Contact: `klaviyoCompanyId` (public API key) and `klaviyoListId`. Leave either empty to switch the signup off.
+
 ## Configuration: links and connections still to finish
 
 | Item | Where | Status |
@@ -62,7 +83,7 @@ If you change text in a page's template or component script, also update the pre
 | $150 home sleep test link | `js/components/SiteCtas.js` and `js/components/SiteFooter.js` (`testUrl`) | **Temporary**: points to https://easybreathe.com/. Replace with the $150 offer page before going public. |
 | Insurance coverage check link | same files (`insuranceUrl`) | https://insurance.easybreathe.com/ |
 | Easy Breathe store link | `js/components/SiteFooter.js` (`storeUrl`), `contact.html` | https://easybreathe.com/ |
-| Email signup | `js/components/Main.js` (`newsletterEndpoint`) | Not connected: the form shows "Email signup coming soon". Add a signup endpoint (POST JSON `{ email }`) or swap in your email provider's embed. A success message appears only after the endpoint confirms. |
+| Easy Breathe newsletter signup (Klaviyo) | `js/ebb-config.js` (`klaviyoCompanyId`, `klaviyoListId`) | Connected to the Easy Breathe CPAP newsletter list (single opt-in). Signups go straight to Klaviyo's subscription API; no Klaviyo tracking script is loaded. |
 | Contact form | `js/components/Contact.js` (`contactEmail`, `contactEndpoint`) | Works now: opens the visitor's email app addressed to easybreatheband@easybreathe.com with their message filled in. Optional: add a form endpoint (POST JSON `{ name, email, topic, message }`) to send without the email app. |
 | Home page "Contact the team" | `js/components/Main.js` (`projectContactUrl`) | mailto:easybreatheband@easybreathe.com |
 | Social links | `instagramUrl`, `tiktokUrl`, `youtubeUrl` in `Main.js` and `Contact.js`; Instagram also in `SiteFooter.js` template | Instagram set to @easybreatheband. TikTok and YouTube not set (hidden until they have a URL). |
@@ -72,6 +93,6 @@ If you change text in a page's template or component script, also update the pre
 ## Content notes
 
 - Members: Cal Benton (lead vocals, acoustic guitar), Nina Brooks (bass, backing vocals), Ben Halton (guitar, keys), Tom Kellan (drums).
-- Lyrics are the owner-supplied sung text with arrangement cues removed. "See-pap" is intentional.
+- Lyrics are the owner-supplied sung text with arrangement cues removed. "CPAP" is always written as CPAP in the lyrics (never a phonetic spelling).
 - The fictional-band, AI-music and "not medical advice" disclosures appear on the About page and in the footer of every page. Keep them.
 - Fonts: Fraunces, Karla and DM Mono from Google Fonts.

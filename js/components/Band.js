@@ -1,22 +1,22 @@
 /* Band component */
 EBB.define("Band", (function () {
 class Component extends DCLogic {
-  state = { masked: {}, open: -1 };
+  state = { masked: {}, open: -1, opener: -1 };
 
   photos() {
     const P = (id, src, w, h, caption, alt) => ({ id: 'g-' + id, src: src, w: w, h: h, caption: caption, alt: alt });
     return [
-      P('live-crowd', 'assets/img/gallery/live-crowd.jpg', 1122, 1402, 'A full room, masks and all', 'EBB performing under an Easy Breathe Band banner while a smiling crowd, some wearing CPAP masks, sings along.'),
-      P('rehearsal', 'assets/img/gallery/rehearsal.jpg', 1122, 1402, 'Rehearsal room, morning light', 'Cal, Nina, Tom and Ben gathered around their instruments in a sunlit rehearsal room.'),
-      P('nina-stage', 'assets/img/gallery/nina-stage.jpg', 941, 1672, 'Nina, locked into the groove', 'Nina playing her sunburst bass on stage, wearing nasal pillows.'),
-      P('cal-singing', 'assets/img/gallery/cal-singing.jpg', 1122, 1402, 'Cal at the mic', 'Cal singing and playing acoustic guitar under warm stage lights, wearing nasal pillows.'),
-      P('band-sofa', 'assets/img/gallery/band-sofa.jpg', 1122, 1402, 'Between songs', 'The four band members laughing together on a sofa with coffee mugs and a handwritten setlist.'),
-      P('tom-drums', 'assets/img/gallery/tom-drums.jpg', 1122, 1402, 'Tom keeps time', 'Tom smiling behind his drum kit, wearing a full face mask.'),
-      P('cal-ben-duo', 'assets/img/gallery/cal-ben-duo.jpg', 941, 1672, 'Cal and Ben, trading a look', 'Cal on acoustic guitar and Ben on keys sharing a smile mid-song, both wearing their CPAP masks.'),
-      P('cal-signing', 'assets/img/gallery/cal-signing.jpg', 1122, 1402, 'Cal signs a fan’s CPAP machine', 'Cal signing his name on a fan’s CPAP machine at a merch table while she laughs.'),
-      P('ben-keys', 'assets/img/gallery/ben-keys.jpg', 1122, 1402, 'Ben has another idea', 'Ben grinning at the keyboard, wearing his full face mask and glasses.'),
-      P('nina-bass', 'assets/img/gallery/nina-bass.jpg', 1122, 1402, 'Nina, with the best line in the room', 'Nina playing bass with a sly smile, wearing nasal pillows.'),
-      P('live-stage', 'assets/img/gallery/live-stage.jpg', 941, 1672, 'EBB live', 'The full band on stage in a brick-walled room, all four wearing CPAP masks.')
+      P('live-crowd', 'assets/img/gallery/live-crowd.jpg?v=ebb-mask-fit-20261124-v3', 1122, 1402, 'A full room, masks and all', 'EBB performing under an Easy Breathe Band banner; Nina Brooks faces the front row while playing bass, and all four members and some fans wear CPAP masks.'),
+      P('rehearsal', 'assets/img/gallery/rehearsal.jpg?v=ebb-mask-fit-20261124-v3', 1122, 1402, 'Rehearsal room, morning light', 'Cal Benton on acoustic guitar, Nina Brooks on bass, Tom Kellan on drums and Ben Halton on keys rehearsing in a sunlit room; Nina turns toward Ben, gesturing as she talks.'),
+      P('nina-stage', 'assets/img/gallery/nina-stage.jpg?v=ebb-mask-fit-20261124-v3', 941, 1670, 'Nina, locked into the groove', 'Nina Brooks singing backing vocals into a microphone while playing her sunburst bass, wearing nasal pillows.'),
+      P('cal-singing', 'assets/img/gallery/cal-singing.jpg?v=ebb-refresh-20261124', 1122, 1402, 'Cal at the mic', 'Cal Benton singing and playing acoustic guitar under warm stage lights, wearing nasal pillows.'),
+      P('band-sofa', 'assets/img/gallery/band-sofa.jpg?v=ebb-mask-fit-20261124-v3', 1122, 1402, 'Between songs', 'Cal Benton, Nina Brooks, Ben Halton and Tom Kellan relaxing on a sofa and armchair with coffee mugs; Nina leans back laughing toward Tom.'),
+      P('tom-drums', 'assets/img/gallery/tom-drums.jpg?v=ebb-refresh-20261124', 1122, 1402, 'Tom keeps time', 'Tom Kellan smiling behind his drum kit, wearing a full face mask.'),
+      P('cal-ben-duo', 'assets/img/gallery/cal-ben-duo.jpg?v=ebb-mask-fit-20261124-v3', 941, 1672, 'Cal and Ben, trading a look', 'Cal Benton on acoustic guitar and Ben Halton on keys playing together on stage, both wearing CPAP masks.'),
+      P('cal-signing', 'assets/img/gallery/cal-signing.jpg?v=ebb-refresh-20261124', 1122, 1402, 'Cal signs a fan’s CPAP machine', 'Cal Benton signing his name on a fan’s CPAP machine at a merch table while she laughs.'),
+      P('ben-keys', 'assets/img/gallery/ben-keys.jpg?v=ebb-mask-fit-20261124-v3', 1122, 1402, 'Ben has another idea', 'Ben Halton grinning at the keyboard, wearing glasses and a compact full face mask.'),
+      P('nina-bass', 'assets/img/gallery/nina-bass.jpg?v=ebb-mask-fit-20261124-v3', 1122, 1402, 'Nina, with the best line in the room', 'Nina Brooks leaning forward with her eyes closed, playing her sunburst bass and wearing nasal pillows.'),
+      P('live-stage', 'assets/img/gallery/live-stage.jpg?v=ebb-mask-fit-20261124-v3', 941, 1671, 'EBB live', 'The full band on stage under an EBB banner, all four wearing CPAP masks; Nina Brooks turns in profile toward her bandmates as concertgoers stand in the foreground.')
     ];
   }
 
@@ -25,7 +25,9 @@ class Component extends DCLogic {
       if (this.state.open >= 0) {
         const c = document.getElementById('lb-close'); if (c) c.focus();
       } else if (prevState.open >= 0) {
-        const t = document.getElementById(this.photos()[prevState.open].id); if (t) t.focus();
+        // Return focus to the gallery tile that opened the viewer.
+        const k = this.state.opener >= 0 ? this.state.opener : prevState.open;
+        const t = document.getElementById(this.photos()[k].id); if (t) t.focus();
       }
     }
   }
@@ -36,7 +38,7 @@ class Component extends DCLogic {
     const open = this.state.open;
     const go = (i) => this.setState({ open: ((i % n) + n) % n });
     const cur = open >= 0 ? list[open] : list[0];
-    const withOpen = list.map((p, i) => Object.assign({}, p, { open: () => this.setState({ open: i }) }));
+    const withOpen = list.map((p, i) => Object.assign({}, p, { open: () => this.setState({ open: i, opener: i }) }));
     return {
       // Fixed desktop columns (top to bottom): col 1 = photos 1–3, col 2 = 4–7, col 3 = 8–11.
       gcols: [{ items: withOpen.slice(0, 3) }, { items: withOpen.slice(3, 7) }, { items: withOpen.slice(7) }],

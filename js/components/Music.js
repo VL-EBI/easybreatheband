@@ -62,7 +62,7 @@ There's always room at Easy Breathe."`],
           ['Pre-Chorus', `You heard the song beneath the doubt,
 Turned it up instead of tuning out.`],
           ['Chorus', alpChorus],
-          ['Verse 2', `See-pap humming by the bed,
+          ['Verse 2', `CPAP humming by the bed,
 A half-made song still in my head.
 I had some questions, quite a few;
 You sat with me and talked them through.
@@ -93,7 +93,7 @@ You make a joke, then let it go.
 You reach to take the mask away;
 I lean in close enough to say—`],
           ['Chorus', lioChorus],
-          ['Verse 2', `See-pap humming beside the bed,
+          ['Verse 2', `CPAP humming beside the bed,
 You pull my arm beneath your head.
 We used to talk till the sun came through;
 Now the quiet says a little, too.
@@ -130,7 +130,7 @@ I came home to be with you."`],
           ['Pre-Chorus', nthPre],
           ['Chorus', nthChorus],
           ['Post-Chorus', nthPost],
-          ['Verse 2', `See-pap humming by the bed,
+          ['Verse 2', `CPAP humming by the bed,
 All that fuss was in my head.
 Little hose and a bedside glow—
 That's the big secret. Now you know.
@@ -202,11 +202,16 @@ I still have your number in my phone.`]
   componentDidMount() {
     const a = new Audio();
     a.preload = 'metadata';
-    a.addEventListener('timeupdate', () => this.setState({ cur: a.currentTime || 0 }));
     a.addEventListener('loadedmetadata', () => this.setState({ dur: isFinite(a.duration) ? a.duration : 0 }));
-    a.addEventListener('play', () => this.setState({ playing: true }));
-    a.addEventListener('pause', () => this.setState({ playing: false }));
-    a.addEventListener('ended', () => this.setState({ playing: false, cur: 0 }));
+    // Let other parts of the page (the Thanksgiving banner's sound bars) know when music is playing.
+    // Also used by the site's opt-in analytics (song plays, pauses and how far people listen).
+    // The song is remembered when it starts, so a pause caused by switching tracks is credited to the right song.
+    const info = () => ({ song: this.playingSong || (this.songs()[this.state.selected] || {}).id, t: a.currentTime || 0, dur: isFinite(a.duration) ? a.duration : 0 });
+    const tell = (on, how) => { window.__ebbPlaying = on; window.dispatchEvent(new CustomEvent('ebb:audio', { detail: Object.assign({ playing: on, how: how }, info()) })); };
+    a.addEventListener('timeupdate', () => { this.setState({ cur: a.currentTime || 0 }); window.dispatchEvent(new CustomEvent('ebb:audio-time', { detail: info() })); });
+    a.addEventListener('play', () => { this.playingSong = (this.songs()[this.state.selected] || {}).id; this.setState({ playing: true }); tell(true, 'play'); });
+    a.addEventListener('pause', () => { if (!a.ended) tell(false, 'pause'); this.setState({ playing: false }); });
+    a.addEventListener('ended', () => { tell(false, 'ended'); this.setState({ playing: false, cur: 0 }); });
     a.addEventListener('error', () => { if (a.getAttribute('src')) this.setState({ playing: false, loadError: this.state.selected }); });
     this.audio = a;
     this.loadTrack(0);
@@ -275,10 +280,10 @@ I still have your number in my phone.`]
       return '';
     };
     const photos = [
-      ['assets/img/gallery/live-stage.jpg', 'The full band on stage in a brick-walled room, all four wearing CPAP masks.'],
-      ['assets/img/gallery/cal-ben-duo.jpg', 'Cal on acoustic guitar and Ben on keys sharing a smile mid-song.'],
-      ['assets/img/gallery/nina-stage.jpg', 'Nina playing her sunburst bass on stage, wearing nasal pillows.'],
-      ['assets/img/gallery/band-sofa.jpg', 'The four band members laughing together on a sofa with coffee mugs.']
+      ['assets/img/gallery/live-stage.jpg?v=ebb-mask-fit-20261124-v3', 'The full band on stage under an EBB banner, all four wearing CPAP masks; Nina Brooks turns in profile toward her bandmates as concertgoers stand in the foreground.', 941, 1671],
+      ['assets/img/gallery/cal-ben-duo.jpg?v=ebb-mask-fit-20261124-v3', 'Cal Benton on acoustic guitar and Ben Halton on keys playing together on stage, both wearing CPAP masks.', 941, 1672],
+      ['assets/img/gallery/nina-stage.jpg?v=ebb-mask-fit-20261124-v3', 'Nina Brooks singing backing vocals into a microphone while playing her sunburst bass, wearing nasal pillows.', 941, 1670],
+      ['assets/img/gallery/band-sofa.jpg?v=ebb-mask-fit-20261124-v3', 'Cal Benton, Nina Brooks, Ben Halton and Tom Kellan relaxing on a sofa and armchair with coffee mugs; Nina leans back laughing toward Tom.', 1122, 1402]
     ];
     const tracks = songs.map((s, i) => {
       const isSel = i === st.selected;
@@ -302,6 +307,8 @@ I still have your number in my phone.`]
         play: () => this.playTrack(i),
         photo: photos[i][0],
         photoAlt: photos[i][1],
+        photoW: photos[i][2],
+        photoH: photos[i][3],
         sections: s.lyrics.map((l) => ({ label: l[0], hasLabel: !!l[0], text: l[1] }))
       };
     });

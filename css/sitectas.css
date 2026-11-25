@@ -21,6 +21,15 @@ body{margin:0}
 
 .sc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 
+/* insurance-only variant (e.g. Thanksgiving page, where most visitors already use CPAP) */
+.sc-wrap.is-single{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 56px;align-items:center}
+
+.sc-wrap.is-single .sc-head{margin-bottom:0}
+
+.sc-wrap.is-single .sc-grid{grid-template-columns:minmax(0,1fr)}
+
+.sc-wrap.is-single .sc-note{grid-column:1/-1;margin-top:8px}
+
 .sc-card{display:flex;flex-direction:column;gap:18px;padding:40px;border-radius:10px;background:#1C1814;border:1px solid rgba(242,229,207,.16);box-shadow:0 24px 40px -24px rgba(0,0,0,.8)}
 
 .sc-card--olive{background:#56604B;border-color:transparent}
@@ -55,6 +64,10 @@ body{margin:0}
   .sc-lede{font-size:18px}
 
   .sc-grid{grid-template-columns:minmax(0,1fr);gap:16px}
+
+  .sc-wrap.is-single{grid-template-columns:minmax(0,1fr);gap:0}
+
+  .sc-wrap.is-single .sc-head{margin-bottom:28px}
 
   .sc-card{padding:26px 20px;gap:14px}
 
