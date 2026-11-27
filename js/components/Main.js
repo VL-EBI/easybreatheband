@@ -219,7 +219,13 @@ I still have your number in my phone.`]
     a.addEventListener('timeupdate', () => { this.setState({ cur: a.currentTime || 0 }); window.dispatchEvent(new CustomEvent('ebb:audio-time', { detail: info() })); });
     a.addEventListener('play', () => { this.playingSong = (this.songs()[this.state.selected] || {}).id; this.setState({ playing: true }); tell(true, 'play'); });
     a.addEventListener('pause', () => { if (!a.ended) tell(false, 'pause'); this.setState({ playing: false }); });
-    a.addEventListener('ended', () => { tell(false, 'ended'); this.setState({ playing: false, cur: 0 }); });
+    // When a song finishes, go straight on to the next one in the list (stops after the last song).
+    a.addEventListener('ended', () => {
+      tell(false, 'ended');
+      this.setState({ playing: false, cur: 0 });
+      const next = this.nextPlayable(this.state.selected);
+      if (next !== null) { this.selectTrack(next); this.startPlayback(); }
+    });
     a.addEventListener('error', () => { if (a.getAttribute('src')) this.setState({ playing: false, loadError: this.state.selected }); });
     this.audio = a;
     this.loadTrack(0);
@@ -246,6 +252,12 @@ I still have your number in my phone.`]
     a.pause();
     const src = this.srcFor(i);
     if (src) { a.src = src; a.load(); } else { a.removeAttribute('src'); }
+  }
+
+  // Next song after i that has audio, or null at the end of the list.
+  nextPlayable(i) {
+    for (let j = i + 1; j < this.songs().length; j++) if (this.srcFor(j)) return j;
+    return null;
   }
 
   selectTrack(i) {

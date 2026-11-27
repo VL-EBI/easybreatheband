@@ -8,8 +8,11 @@
 <meta name="referrer" content="no-referrer">
 <!-- On easybreatheband.com this file supplies the analytics service address; when served by the service itself it is not needed. -->
 <script src="js/ebb-config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;family=Karla:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap">
+<link rel="icon" href="assets/img/favicon.png">
 <style>
-/* Internal dashboard: warm neutrals from the EBB palette, system fonts (no outside requests). */
+/* Internal dashboard in the EBB look: dark header band with the wordmark, warm paper body, site fonts. */
 :root{--bg:#F6F1E8;--card:#FFFDF8;--ink:#2A211B;--muted:#6E6052;--line:#E4D9C8;--accent:#B8643A;--accent-2:#56604B;--bar:#C78B4C;--bar-soft:#EBD9BF;color-scheme:light}
 @media (prefers-color-scheme: dark){:root{--bg:#1C1814;--card:#271F19;--ink:#F2E5CF;--muted:#BBAA90;--line:#3D3128;--accent:#E08A5B;--accent-2:#9AA88A;--bar:#D9A066;--bar-soft:#4A3A2D;color-scheme:dark}}
 *{box-sizing:border-box}
@@ -19,7 +22,12 @@ header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-betw
 h1{margin:0;font:700 26px/1.2 Georgia,"Times New Roman",serif}
 h1 small{display:block;font:500 13px/1.4 system-ui,sans-serif;color:var(--muted);margin-top:4px}
 .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-select,.btn{min-height:40px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+input[type=date],select,.btn{min-height:40px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+input[type=date]{color-scheme:dark;padding:6px 10px}
+.custom{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px}
+.custom[hidden]{display:none}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.range-err{color:#E8A08A;font-size:13px}
 .btn{text-decoration:none;font-weight:600;display:inline-flex;align-items:center}
 .btn:hover{border-color:var(--accent)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
@@ -61,13 +69,63 @@ svg text{fill:var(--muted);font-size:11px}
 .gate button,.btn-solid{min-height:46px;padding:10px 18px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-weight:700;cursor:pointer}
 .gate .msg{min-height:22px;margin:0;color:#B3401F;font-size:14px}
 [hidden]{display:none!important}
+/* ---- EBB look ---- */
+html,body{overflow-x:clip}
+.wg{display:grid;grid-template-columns:40px repeat(24,minmax(0,1fr));gap:3px;align-items:center}
+.wg-c{position:relative;aspect-ratio:1/1;border-radius:4px;background:var(--bar-soft)}
+.wg-c::after{content:"";position:absolute;inset:0;border-radius:4px;background:var(--bar);opacity:var(--a)}
+.wg-d,.wg-h{font:500 11px/1 var(--f-label);color:var(--muted);letter-spacing:.04em}
+.wg-h{text-align:left;white-space:nowrap;padding-bottom:4px}
+.wg-key{display:flex;align-items:center;gap:4px;justify-content:flex-end;margin-top:10px;font:500 11px/1 var(--f-label);color:var(--muted)}
+.wg-key i{position:relative;width:14px;height:14px;border-radius:3px;background:var(--bar-soft)}
+.wg-key i::after{content:"";position:absolute;inset:0;border-radius:3px;background:var(--bar);opacity:var(--a)}
+.wg-key span{margin:0 4px}
+@media (max-width:520px){.wg{grid-template-columns:30px repeat(24,minmax(0,1fr));gap:2px}.wg-c,.wg-c::after{border-radius:2px}.wg-h{font-size:9px}}
+:root{--f-head:"Fraunces",Georgia,serif;--f-body:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;--f-label:"DM Mono","Courier New",monospace;--band:#1C1814;--cream:#F2E5CF;--amber:#C78B4C}
+body{font-family:var(--f-body);font-size:15px;background:var(--bg) radial-gradient(1200px 500px at 85% -10%,rgba(199,139,76,.10),transparent 60%) no-repeat}
+.wrap{padding-top:0}
+.top{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px;margin:0 0 24px;padding:20px 0 22px;color:var(--cream);background:var(--band);box-shadow:0 0 0 100vmax var(--band),0 2px 0 100vmax var(--amber);clip-path:inset(0 -100vmax -2px)}
+.brand{display:flex;align-items:center;gap:18px;min-width:0}
+.brand img{display:block;height:50px;width:auto}
+.brand-text{display:flex;flex-direction:column;gap:2px;padding-left:18px;border-left:1px solid rgba(242,229,207,.22);min-width:0}
+.brand h1{font:600 26px/1.15 var(--f-head);color:var(--cream);font-variation-settings:"SOFT" 100,"WONK" 1}
+.brand h1 small{display:block;margin-top:4px;font:400 13px/1.4 var(--f-body);color:#CDBDA3}
+.top .controls label{color:#CDBDA3!important;font-family:var(--f-label);font-size:12px!important;letter-spacing:.1em;text-transform:uppercase}
+.top input[type=date],.top select,.top .btn{background:#2B211A;color:var(--cream);border-color:rgba(242,229,207,.24);border-radius:999px;padding-left:16px;padding-right:16px}
+.top select{padding-right:34px;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--cream) 50%),linear-gradient(135deg,var(--cream) 50%,transparent 50%);background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+.top input[type=date]{border-radius:10px}
+.top .btn:hover,.top select:hover,.top input[type=date]:hover{border-color:var(--amber)}
+.top #apply{background:var(--amber);border-color:var(--amber);color:var(--band)}
+.top .custom > span{color:#CDBDA3}
+.kpi{position:relative;padding:16px 18px 14px;border-radius:14px;overflow:hidden;box-shadow:0 10px 24px -18px rgba(60,40,20,.45)}
+.kpi::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--bar-soft)}
+.kpi.hl::before{background:var(--accent)}
+.kpi.hl{box-shadow:0 10px 24px -18px rgba(60,40,20,.45)}
+.kpi b{font:600 32px/1.05 var(--f-head);margin-bottom:6px}
+.kpi span{font-family:var(--f-label);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.card{border-radius:14px;padding:20px 22px;box-shadow:0 10px 24px -20px rgba(60,40,20,.45)}
+.card h2{font:600 19px/1.25 var(--f-head);font-variation-settings:"SOFT" 100,"WONK" 1}
+th{font-family:var(--f-label);font-weight:500;letter-spacing:.08em}
+.gate-page{min-height:100vh}
+.gate{margin-top:10vh;text-align:left;border-radius:16px;box-shadow:0 30px 60px -30px rgba(40,25,10,.6);overflow:hidden;padding:0}
+.gate-band{background:var(--band);padding:26px 28px 22px;border-bottom:2px solid var(--amber);text-align:center}
+.gate-band img{display:block;height:92px;width:auto;margin:0 auto}
+.gate-body{padding:24px 28px 26px}
+.gate h1{font:600 24px/1.2 var(--f-head)}
+.gate button{border-radius:999px;background:var(--amber);border-color:var(--amber);color:var(--band)}
+@media (prefers-color-scheme: dark){.kpi,.card{box-shadow:none}}
+@media (max-width:820px){.top{padding:16px 0 18px}.brand img{height:40px}.brand h1{font-size:22px}.brand-text{padding-left:14px}.kpi b{font-size:28px}}
+@media (max-width:520px){.brand{flex-wrap:wrap;gap:10px}.brand-text{border-left:0;padding-left:0;flex-basis:100%}.controls{width:100%}.controls select{flex:1}}
+
 @media (max-width:820px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi.hl{grid-column:1/-1}.grid{grid-template-columns:minmax(0,1fr)}.map-wrap{grid-template-columns:minmax(0,1fr)}.map{max-width:300px}.fstep{grid-template-columns:120px minmax(0,1fr) 90px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <section class="gate" id="gate" aria-labelledby="gate-title">
-<h1 id="gate-title">EBB analytics</h1>
+<div class="gate-band"><img src="assets/img/ebb-logo-full-cream.png" alt="EBB, Easy Breathe Band" width="900" height="508" onerror="this.remove()"></div>
+<div class="gate-body">
+<h1 id="gate-title">Site analytics</h1>
 <p>Enter the access code to see the numbers.</p>
 <form id="gate-form">
 <label for="code">Access code</label>
@@ -75,13 +133,23 @@ svg text{fill:var(--muted);font-size:11px}
 <button type="submit" id="unlock">Unlock</button>
 <p class="msg" id="gate-msg" aria-live="polite"></p>
 </form>
+</div>
 </section>
 <div id="dash" hidden>
-<header>
-<h1>EBB analytics<small id="range-note">Loading…</small></h1>
+<header class="top">
+<div class="brand">
+<img src="assets/img/ebb-wordmark-cream.png" alt="EBB" width="900" height="508" onerror="this.remove()">
+<div class="brand-text"><h1>Site analytics<small id="range-note">Loading…</small></h1></div>
+</div>
 <div class="controls">
 <label for="days" style="font-size:13px;color:var(--muted)">Period</label>
-<select id="days"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option><option value="365">Last 12 months</option></select>
+<select id="days"><option value="today">Today</option><option value="yesterday">Yesterday</option><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option><option value="365">Last 12 months</option><option value="custom">Custom range…</option></select>
+<span class="custom" id="custom" hidden>
+<label for="from" class="vh">From</label><input type="date" id="from">
+<span aria-hidden="true">to</span>
+<label for="to" class="vh">To</label><input type="date" id="to">
+<button type="button" class="btn" id="apply">Apply</button>
+</span>
 <button type="button" class="btn" id="csv">Download CSV</button>
 <button type="button" class="btn" id="lock">Lock</button>
 </div>
@@ -100,7 +168,9 @@ const api = (path) => fetch(API + path, { headers: { 'X-EBB-Code': code }, cache
 const SONGS = {
   'a-little-pressure': 'A Little Pressure', 'leave-it-on': 'Leave It On', 'nothing-to-hide': 'Nothing to Hide',
   'tomorrow-comes-in-a-box': 'Tomorrow Comes in a Box', 'stay-for-the-leftovers': 'Stay for the Leftovers',
-  'heres-to-the-quiet-ones': 'Here’s to the Quiet Ones', 'keep-the-good': 'Keep the Good'
+  'heres-to-the-quiet-ones': 'Here’s to the Quiet Ones', 'keep-the-good': 'Keep the Good',
+  'cpap-next-to-mine': 'CPAP Next to Mine', 'christmas-found-us-anyway': 'Christmas Found Us Anyway', 'up-for-christmas': 'Up for Christmas',
+  'tangled-up-in-christmas': 'Tangled Up in Christmas', 'the-gift-you-never-wrapped': 'The Gift You Never Wrapped'
 };
 const PAGES = { '/': 'Home', '/music': 'Music', '/band': 'Meet the Band', '/about': 'About', '/contact': 'Contact', '/christmas': 'Christmas', '/thanksgiving': 'Thanksgiving', '/privacy': 'Privacy', '/404': 'Not found' };
 
@@ -130,31 +200,73 @@ function ebTypes(rows) {
   return Object.entries(out);
 }
 
-function dailyChart(daily, days) {
-  const map = Object.fromEntries(daily.map((d) => [d.day, d]));
+// Bars for each day in the period (or each hour when the period is a single day).
+function dailyChart(d) {
   const pts = [];
-  for (let i = days - 1; i >= 0; i--) { const d = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10); pts.push({ day: d, v: (map[d] || {}).visits || 0 }); }
+  if (d.hourly) {
+    const map = Object.fromEntries(d.hourly.map((h) => [h.hour, h]));
+    for (let h = 0; h < 24; h++) pts.push({ label: hourLabel(h), tip: hourLabel(h), v: (map[h] || {}).visits || 0 });
+  } else {
+    const map = Object.fromEntries(d.daily.map((x) => [x.day, x]));
+    for (let t = Date.parse(d.from + 'T00:00:00Z'); t <= Date.parse(d.to + 'T00:00:00Z'); t += 864e5) {
+      const day = new Date(t).toISOString().slice(0, 10);
+      pts.push({ label: day.slice(5), tip: day, v: (map[day] || {}).visits || 0 });
+    }
+  }
   const W = 1000, H = 180, pad = 24, max = Math.max(1, ...pts.map((p) => p.v));
   const bw = (W - pad) / pts.length;
-  const bars = pts.map((p, i) => { const h = (p.v / max) * (H - 30); return `<rect x="${pad + i * bw + 1}" y="${H - 18 - h}" width="${Math.max(1, bw - 2)}" height="${h}" rx="2" fill="var(--bar)"><title>${p.day}: ${p.v} visits</title></rect>`; }).join('');
-  const lbl = (i) => `<text x="${pad + i * bw + bw / 2}" y="${H - 4}" text-anchor="middle">${pts[i].day.slice(5)}</text>`;
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Visits per day"><text x="0" y="12">${max}</text><line x1="${pad}" x2="${W}" y1="${H - 18}" y2="${H - 18}" stroke="var(--line)"/>${bars}${lbl(0)}${lbl(Math.floor(pts.length / 2))}${lbl(pts.length - 1)}</svg>`;
+  const bars = pts.map((p, i) => { const h = (p.v / max) * (H - 30); return `<rect x="${pad + i * bw + 1}" y="${H - 18 - h}" width="${Math.max(1, bw - 2)}" height="${h}" rx="2" fill="var(--bar)"><title>${p.tip}: ${p.v} visits</title></rect>`; }).join('');
+  const idx = [...new Set([0, Math.floor((pts.length - 1) / 2), pts.length - 1])];
+  const lbl = (i) => `<text x="${pad + i * bw + bw / 2}" y="${H - 4}" text-anchor="middle">${pts[i].label}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Visits per ${d.hourly ? 'hour' : 'day'}"><text x="0" y="12">${max}</text><line x1="${pad}" x2="${W}" y1="${H - 18}" y2="${H - 18}" stroke="var(--line)"/>${bars}${idx.map(lbl).join('')}</svg>`;
 }
+// Weekday x hour grid: darker squares = more visits.
+function weekGrid(rows) {
+  const map = {}; let max = 0, best = null;
+  rows.forEach((r) => { map[r.dow + '-' + r.hour] = r.visits; if (r.visits > max) { max = r.visits; best = r; } });
+  const days = [[1, 'Mon'], [2, 'Tue'], [3, 'Wed'], [4, 'Thu'], [5, 'Fri'], [6, 'Sat'], [0, 'Sun']];
+  const head = '<div></div>' + Array.from({ length: 24 }, (_, h) => `<div class="wg-h">${h % 3 === 0 ? hourLabel(h).replace('m', '') : ''}</div>`).join('');
+  const body = days.map(([d, name]) => `<div class="wg-d">${name}</div>` + Array.from({ length: 24 }, (_, h) => {
+    const v = map[d + '-' + h] || 0;
+    const a = v ? 0.15 + 0.85 * (v / max) : 0;
+    return `<div class="wg-c" style="--a:${a.toFixed(2)}" title="${name} ${hourLabel(h)}–${hourLabel((h + 1) % 24)}: ${v} visit${v === 1 ? '' : 's'}"></div>`;
+  }).join('')).join('');
+  const dayName = (d) => days.find((x) => x[0] === d)[1];
+  const busiest = best ? `Busiest: ${dayName(best.dow)} ${hourLabel(best.hour)}–${hourLabel((best.hour + 1) % 24)} (${best.visits} visit${best.visits === 1 ? '' : 's'}).` : 'No visits in this period yet.';
+  return `<p class="note">${busiest} Hover a square for its count. Times are in your time zone.</p><div class="wg" role="img" aria-label="Visits by day of week and hour. ${busiest}">${head}${body}</div>
+    <div class="wg-key" aria-hidden="true"><span>Fewer</span><i style="--a:.15"></i><i style="--a:.45"></i><i style="--a:.75"></i><i style="--a:1"></i><span>More</span></div>`;
+}
+const hourLabel = (h) => (h % 12 || 12) + (h < 12 ? 'am' : 'pm');
+
+// The chosen period as whole days in this browser's time zone.
+const localDay = (dt) => new Date(dt.getTime() - dt.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+function period() {
+  const v = document.getElementById('days').value, now = new Date();
+  if (v === 'custom') return { from: document.getElementById('from').value, to: document.getElementById('to').value };
+  if (v === 'today') return { from: localDay(now), to: localDay(now) };
+  if (v === 'yesterday') { const y = localDay(new Date(now.getTime() - 864e5)); return { from: y, to: y }; }
+  return { from: localDay(new Date(now.getTime() - (Number(v) - 1) * 864e5)), to: localDay(now) };
+}
+const rangeQuery = (p) => 'from=' + p.from + '&to=' + p.to + '&tz=' + (-new Date().getTimezoneOffset());
+const niceDay = (s) => new Date(s + 'T12:00:00').toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
 
 let lastPage;
 async function load(pageSel) {
   if (pageSel !== undefined) lastPage = pageSel;
   pageSel = lastPage;
-  const days = document.getElementById('days').value;
+  const per = period();
   const app = document.getElementById('app');
+  if (!per.from || !per.to || per.from > per.to) { document.getElementById('range-note').textContent = 'Pick a start and end date, then Apply.'; return; }
   let d;
   try {
-    const r = await api('/api/summary?days=' + days + (pageSel ? '&page=' + encodeURIComponent(pageSel) : ''));
+    const r = await api('/api/summary?' + rangeQuery(per) + (pageSel ? '&page=' + encodeURIComponent(pageSel) : ''));
     if (r.status === 401 || r.status === 429 || r.status === 503) { lock(await r.text()); return; }
+    if (r.status === 400) throw new Error('That date range isn’t valid (it can be up to 400 days).');
     if (!r.ok) throw new Error('The server answered ' + r.status + '.');
     d = await r.json();
+    if (!d.from) throw new Error('The analytics service needs the latest worker.js to show custom date ranges.');
   } catch (e) { app.innerHTML = `<p class="err">Couldn’t load the numbers. ${esc(e.message)} Refresh the page to try again.</p>`; return; }
-  document.getElementById('range-note').textContent = 'All visits except people who turned analytics off · since ' + d.since + ' (UTC) · updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ', refreshes every minute';
+  document.getElementById('range-note').textContent = 'All visits except people who turned analytics off · ' + (d.from === d.to ? niceDay(d.from) : niceDay(d.from) + ' to ' + niceDay(d.to)) + ' · updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ', refreshes every minute';
   const t = d.totals;
   const scroll = Object.fromEntries(d.scroll.map((s) => [s.path, s]));
   const exits = Object.fromEntries(d.exits.map((x) => [x.path, x]));
@@ -167,7 +279,9 @@ async function load(pageSel) {
     <div class="kpi hl"><b>${n(t.eb_visits)}</b><span>Went to Easy Breathe · ${pct(t.eb_visits, t.visits)}% of visits</span></div>
   </section>
   <div class="grid">
-    <section class="card wide"><h2>Visits per day</h2><p class="note">A visit is one browser tab session, which can include several pages.</p>${dailyChart(d.daily, d.days)}</section>
+    <section class="card wide"><h2>Visits per ${d.hourly ? 'hour' : 'day'}</h2><p class="note">A visit is one browser tab session, which can include several pages. Times are in your time zone.</p>${dailyChart(d)}</section>
+
+    ${d.weekhour ? `<section class="card wide"><h2>When people visit</h2>${weekGrid(d.weekhour)}</section>` : ''}
 
     <section class="card wide"><h2>Going to Easy Breathe</h2><p class="note">Clicks that took visitors to an Easy Breathe site: the insurance check, the home sleep test, or the Easy Breathe store. ${n(t.eb_visits)} visits (${pct(t.eb_visits, t.visits)}%) clicked through at least once.</p>
       <div class="funnel" style="margin-bottom:14px">
@@ -185,7 +299,7 @@ async function load(pageSel) {
 
     <section class="card wide"><h2>Songs</h2><p class="note">Plays include resuming after a pause. “Finished” and the listening marks are shares of fresh starts.</p>
       ${table([
-        { h: 'Song', f: (r) => esc(SONGS[r.song] || r.song) },
+        { h: 'Song', f: (r) => esc(SONGS[r.song] || String(r.song || '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase())) },
         { h: 'Plays', num: 1, f: (r) => n(r.plays) },
         { h: 'Listeners', num: 1, f: (r) => n(r.listeners) },
         { h: 'Heard 25%', num: 1, f: (r) => pct(r.p25, r.starts) + '%' },
@@ -279,14 +393,27 @@ async function unlock(candidate) {
 }
 document.getElementById('gate-form').onsubmit = (e) => { e.preventDefault(); unlock(document.getElementById('code').value.trim()); };
 document.getElementById('lock').onclick = () => lock('Locked.');
-document.getElementById('days').onchange = () => load();
+document.getElementById('days').onchange = () => {
+  const custom = document.getElementById('days').value === 'custom';
+  document.getElementById('custom').hidden = !custom;
+  if (custom) {
+    const f = document.getElementById('from'), t = document.getElementById('to'), today = localDay(new Date());
+    f.max = t.max = today;
+    if (!t.value) t.value = today;
+    if (!f.value) f.value = localDay(new Date(Date.now() - 6 * 864e5));
+    f.focus();
+    return;
+  }
+  load();
+};
+document.getElementById('apply').onclick = () => load();
 document.getElementById('csv').onclick = async () => {
-  const days = document.getElementById('days').value;
-  const r = await api('/export.csv?days=' + days);
+  const per = period();
+  const r = await api('/export.csv?' + rangeQuery(per));
   if (!r.ok) { lock(r.status === 401 ? 'That code didn’t work.' : await r.text()); return; }
   const url = URL.createObjectURL(await r.blob());
   const a = document.createElement('a');
-  a.href = url; a.download = 'ebb-analytics-last-' + days + '-days.csv';
+  a.href = url; a.download = 'ebb-analytics-' + per.from + '-to-' + per.to + '.csv';
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 2000);
 };
