@@ -98,7 +98,103 @@ Your CPAP next to mine.`]
         ]
       },
       {
-        id: 'the-gift-you-never-wrapped', title: 'The Gift You Never Wrapped', kicker: 'Track 02',
+        id: 'christmas-found-us-anyway', title: 'Christmas Found Us Anyway', kicker: 'Track 02',
+        desc: 'Stuck at the airport on Christmas Eve, a few strangers pull their chairs together and make a holiday out of the delay.',
+        photo: ['assets/img/christmas/02-gingerbread-kitchen.jpg?v=ebb-christmas-20261125-v1', 'Nina, Tom, Cal and Ben bake gingerbread in a festive kitchen; Nina pipes icing onto a gingerbread house.', 1536, 1024],
+        lyrics: [
+          ['Verse 1', `The board says, "Maybe after ten."
+At ten, the numbers change again.
+I call back home and try to sound
+Like Christmas hasn't let me down.
+I spot another CPAP case;
+She shifts her coat and makes some space.
+"You too?" she asks. I start to grin.
+She opens up a cookie tin.`],
+          ['Chorus', foundChorus],
+          ['Verse 2', `I baked too much, as I always do.
+These were for Mom. There's some for you.
+She calls to say she's doing fine;
+I know that voice—it's just like mine.
+A little girl folds paper stars,
+A boy takes out his old guitar.
+We pass the cookies down the row;
+He plays; we sing the songs we know.`],
+          ['Chorus', foundChorus],
+          ['Bridge', `Leave a little light on;
+We'll get there when we can.
+The snow can have the runway—
+We've found a place to land.`],
+          ['Final Chorus', foundChorus],
+          ['Outro', `The board still says, "Delayed."
+Christmas found us anyway.`]
+        ]
+      },
+      {
+        id: 'up-for-christmas', title: 'Up for Christmas', kicker: 'Track 03',
+        desc: 'Christmas morning, for once up before the kids, and ready for every bit of the beautiful mess.',
+        photo: ['assets/img/christmas/08-christmas-gift-exchange.jpg?v=ebb-christmas-20261125-v1', 'The band trades gifts by the tree in Santa hats; Nina unwraps new CPAP tubing.', 1536, 1024],
+        lyrics: [
+          ['Verse 1', `Six a.m., the hallway creaks,
+Little feet outside our door.
+CPAP off and slippers on—
+No "just five minutes more."
+They shout, "Dad! Come see! Come see!"
+For once, they're running after me.
+You catch me laughing on the stairs,
+Like I'm the youngest person there.`],
+          ['Chorus', upChorus],
+          ['Verse 2', `Pancakes black around the edge,
+There's tape still sticking to my leg.
+You take a picture; I complain,
+Then make you take it once again.
+The room looks like a paper sea,
+And you sit right down next to me.
+You used to listen while I slept;
+Now you're dreaming next to me.`],
+          ['Chorus', upChorus],
+          ['Bridge', `Someday the stairs will all be quiet;
+They'll have their own trees to light.
+So let them pull me every which way—
+I've got both arms open wide.`],
+          ['Final Chorus', upChorus],
+          ['Outro', `I'm up for Christmas.
+Bring on everything.`]
+        ]
+      },
+      {
+        id: 'tangled-up-in-christmas', title: 'Tangled Up in Christmas', kicker: 'Track 04',
+        desc: 'A playful love song about hanging the lights, hiding the presents and never quite getting the star on the tree.',
+        photo: ['assets/img/christmas/01-decorating-the-tree.jpg?v=ebb-christmas-20261125-v1', 'Cal, Ben, Tom and Nina decorate a Christmas tree trimmed with colorful CPAP tubing and CPAP mask ornaments, all in ugly Christmas sweaters.', 1672, 941],
+        lyrics: [
+          ['Verse 1', `My CPAP's on the nightstand,
+Your coat's across the chair.
+You came to help me hang the lights;
+Now there's tinsel in your hair.
+I reach up for that silver strand;
+You catch my wrist and kiss my hand.
+You say, "We've got so much to do."
+I turn the music up on you.`],
+          ['Chorus', tangledChorus],
+          ['Verse 2', `You're wrapping something on the floor,
+I find excuses to pass through.
+You hide the box and block the door—
+Can't get a single thing past you.
+One kiss before the mask goes on;
+I shift the tube and pull you near.
+You say, "We never hung that star."
+I say, "I've got my Christmas here."`],
+          ['Chorus', tangledChorus],
+          ['Bridge', `When all the paper's gone,
+And every light comes down,
+I'll still be wanting you
+The way I want you now.`],
+          ['Final Chorus', tangledChorus],
+          ['Outro', `Tangled up in Christmas—
+Come get tangled up with me.`]
+        ]
+      },
+      {
+        id: 'the-gift-you-never-wrapped', title: 'The Gift You Never Wrapped', kicker: 'Track 05',
         desc: 'A thank-you to the person who noticed first, made room on the nightstand and stayed through everything.',
         photo: ['assets/img/christmas/03-gift-wrapping-studio.jpg?v=ebb-christmas-20261125-v1', 'The band wraps presents in their rehearsal space; one open gift box holds a CPAP mask and tubing.', 1536, 1024],
         lyrics: [
@@ -143,102 +239,6 @@ And somewhere safe to go.`],
 With my name written in your hand.
 But the gift you never wrapped
 Was the way you took my hand.`]
-        ]
-      },
-      {
-        id: 'christmas-found-us-anyway', title: 'Christmas Found Us Anyway', kicker: 'Track 03',
-        desc: 'Stuck at the airport on Christmas Eve, a few strangers pull their chairs together and make a holiday out of the delay.',
-        photo: ['assets/img/christmas/02-gingerbread-kitchen.jpg?v=ebb-christmas-20261125-v1', 'Nina, Tom, Cal and Ben bake gingerbread in a festive kitchen; Nina pipes icing onto a gingerbread house.', 1536, 1024],
-        lyrics: [
-          ['Verse 1', `The board says, "Maybe after ten."
-At ten, the numbers change again.
-I call back home and try to sound
-Like Christmas hasn't let me down.
-I spot another CPAP case;
-She shifts her coat and makes some space.
-"You too?" she asks. I start to grin.
-She opens up a cookie tin.`],
-          ['Chorus', foundChorus],
-          ['Verse 2', `I baked too much, as I always do.
-These were for Mom. There's some for you.
-She calls to say she's doing fine;
-I know that voice—it's just like mine.
-A little girl folds paper stars,
-A boy takes out his old guitar.
-We pass the cookies down the row;
-He plays; we sing the songs we know.`],
-          ['Chorus', foundChorus],
-          ['Bridge', `Leave a little light on;
-We'll get there when we can.
-The snow can have the runway—
-We've found a place to land.`],
-          ['Final Chorus', foundChorus],
-          ['Outro', `The board still says, "Delayed."
-Christmas found us anyway.`]
-        ]
-      },
-      {
-        id: 'up-for-christmas', title: 'Up for Christmas', kicker: 'Track 04',
-        desc: 'Christmas morning, for once up before the kids, and ready for every bit of the beautiful mess.',
-        photo: ['assets/img/christmas/08-christmas-gift-exchange.jpg?v=ebb-christmas-20261125-v1', 'The band trades gifts by the tree in Santa hats; Nina unwraps new CPAP tubing.', 1536, 1024],
-        lyrics: [
-          ['Verse 1', `Six a.m., the hallway creaks,
-Little feet outside our door.
-CPAP off and slippers on—
-No "just five minutes more."
-They shout, "Dad! Come see! Come see!"
-For once, they're running after me.
-You catch me laughing on the stairs,
-Like I'm the youngest person there.`],
-          ['Chorus', upChorus],
-          ['Verse 2', `Pancakes black around the edge,
-There's tape still sticking to my leg.
-You take a picture; I complain,
-Then make you take it once again.
-The room looks like a paper sea,
-And you sit right down next to me.
-You used to listen while I slept;
-Now you're dreaming next to me.`],
-          ['Chorus', upChorus],
-          ['Bridge', `Someday the stairs will all be quiet;
-They'll have their own trees to light.
-So let them pull me every which way—
-I've got both arms open wide.`],
-          ['Final Chorus', upChorus],
-          ['Outro', `I'm up for Christmas.
-Bring on everything.`]
-        ]
-      },
-      {
-        id: 'tangled-up-in-christmas', title: 'Tangled Up in Christmas', kicker: 'Track 05',
-        desc: 'A playful love song about hanging the lights, hiding the presents and never quite getting the star on the tree.',
-        photo: ['assets/img/christmas/01-decorating-the-tree.jpg?v=ebb-christmas-20261125-v1', 'Cal, Ben, Tom and Nina decorate a Christmas tree trimmed with colorful CPAP tubing and CPAP mask ornaments, all in ugly Christmas sweaters.', 1672, 941],
-        lyrics: [
-          ['Verse 1', `My CPAP's on the nightstand,
-Your coat's across the chair.
-You came to help me hang the lights;
-Now there's tinsel in your hair.
-I reach up for that silver strand;
-You catch my wrist and kiss my hand.
-You say, "We've got so much to do."
-I turn the music up on you.`],
-          ['Chorus', tangledChorus],
-          ['Verse 2', `You're wrapping something on the floor,
-I find excuses to pass through.
-You hide the box and block the door—
-Can't get a single thing past you.
-One kiss before the mask goes on;
-I shift the tube and pull you near.
-You say, "We never hung that star."
-I say, "I've got my Christmas here."`],
-          ['Chorus', tangledChorus],
-          ['Bridge', `When all the paper's gone,
-And every light comes down,
-I'll still be wanting you
-The way I want you now.`],
-          ['Final Chorus', tangledChorus],
-          ['Outro', `Tangled up in Christmas—
-Come get tangled up with me.`]
         ]
       }
     ];
