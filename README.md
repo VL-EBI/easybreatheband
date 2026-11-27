@@ -12,10 +12,12 @@ No build step and no dependencies: plain HTML, CSS and JavaScript that runs on G
 | `band.html` | Meet the Band, including the photo gallery (full-screen viewer) |
 | `about.html` | About the Project (full story and disclosures) |
 | `contact.html` | Contact |
-| `404.html` | Page not found (also sends `/thanksgiving/` and other spellings to the Thanksgiving page) |
+| `404.html` | Page not found (also sends `/christmas/`, `/thanksgiving/` and other spellings to the Christmas page) |
+| `privacy.html` | Privacy and analytics notice at `/privacy` (linked from every footer) |
 | `analytics.html` | Locked analytics dashboard at `/analytics` (not linked; needs the access code) |
-| `hold.html` | Forwards to the Thanksgiving page, tagged as hold-music traffic (for the voiceover address `/hold`) |
-| `thanksgiving.html` | Thanksgiving songs, lyrics and photos. Live at `/thanksgiving` (GitHub Pages serves `.html` pages without the extension) |
+| `hold.html` | Forwards to the Christmas page, tagged as hold-music traffic (for the voiceover address `/hold`) |
+| `christmas.html` | Christmas songs, lyrics and photos. Live at `/christmas` (GitHub Pages serves `.html` pages without the extension) |
+| `thanksgiving.html` | Retired: forwards `/thanksgiving` (and the easybreathe.com redirect) to `/christmas`, keeping any link tag |
 
 ## Run it locally
 
@@ -44,7 +46,7 @@ The empty `.nojekyll` file tells GitHub Pages to serve the files as they are.
 assets/img/         group portraits, logos (cream + brown), textures, favicon
 assets/img/gallery/ gallery and page photos (used on Meet the Band, Home, Music and About)
 assets/img/members/ mask-on / mask-off portraits for each member (Meet the Band)
-assets/img/thanksgiving/ seasonal photos for the Thanksgiving page
+assets/img/christmas/ seasonal photos for the Christmas page
 assets/audio/      song recordings (MP3)
 css/               one stylesheet per page or shared part
 js/dc-lite.js      small renderer that powers templates and interactivity
@@ -66,13 +68,13 @@ If you change text in a page's template or component script, also update the pre
 - The dashboard is at `/analytics` (`analytics.html`). It isn't linked anywhere, asks search engines not to list it, and only shows numbers after the analytics service accepts the access code.
 - Analytics are on by default with no banner. Anyone can turn them off (or back on) with **Analytics choices** in the footer; the choice is saved in their browser. Browsers that send Global Privacy Control aren't tracked unless the visitor turns analytics on.
 - `/privacy` (`privacy.html`) is the privacy and analytics notice, linked from every page's footer. Have compliance review its wording before changing it.
-- `/hold` forwards to the Thanksgiving page tagged as hold-music traffic (`?utm_source=hold-music`), so phone-line visits can be counted separately.
+- `/hold` forwards to the Christmas page tagged as hold-music traffic (`?utm_source=hold-music`), so phone-line visits can be counted separately. Redirects from easybreathe.com should add `?utm_source=easybreathe-redirect`. The site removes these tags from the address bar after reading them.
 
-## Seasonal: Thanksgiving
+## Seasonal: Christmas
 
-- The page lives at `/thanksgiving` and is linked from the hold music. It is not in the main menu.
-- Every other page shows a Thanksgiving banner under the header linking to it. To hide it everywhere after the holiday, open `js/components/SiteSeason.js` and change `show: true` to `show: false`. (The prerendered copy in each page's `#root` is replaced as soon as the page loads; to remove it from the HTML too, delete the `<aside class="ss">` block inside each page's `#root`.)
-- The page itself can stay up; it only links to the rest of the site.
+- The page lives at `/christmas` and is announced in the hold music. It is not in the main menu.
+- Every other page shows a Christmas banner under the header linking to it. To hide it everywhere after the holiday, open `js/components/SiteSeason.js` and change `show: true` to `show: false`. (The prerendered copy in each page's `#root` is replaced as soon as the page loads; to remove it from the HTML too, delete the `<aside class="ss">` block inside each page's `#root`.)
+- The Thanksgiving page is retired: `/thanksgiving` forwards to `/christmas`. Its old photos and songs (`assets/img/thanksgiving/`, `assets/audio/stay-for-the-leftovers.mp3`, `heres-to-the-quiet-ones.mp3`, `keep-the-good.mp3`) are no longer used and can be deleted from the repository.
 
 ## Cache versioning
 

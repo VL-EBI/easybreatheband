@@ -41,6 +41,15 @@ class Component extends DCLogic {
     const choice = saved === 'yes' || saved === 'no' ? saved : (gpc ? 'no' : 'yes');
     this.setState({ choice: choice, gpc: gpc });
     if (choice === 'yes') this.startTracking();
+    // Campaign tags (?utm_source=hold-music, easybreathe-redirect...) are read above; drop them from the
+    // address bar so links people copy and share don't carry them.
+    if (/[?&]utm_/.test(location.search)) {
+      try {
+        const u = new URL(location.href);
+        Array.from(u.searchParams.keys()).filter((k) => k.indexOf('utm_') === 0).forEach((k) => u.searchParams.delete(k));
+        history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+      } catch (e) {}
+    }
   }
 
   componentWillUnmount() {

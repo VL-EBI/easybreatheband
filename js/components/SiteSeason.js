@@ -1,7 +1,7 @@
 /* SiteSeason component */
 EBB.define("SiteSeason", (function () {
 class Component extends DCLogic {
-  // Seasonal banner shown under the header on every page except the Thanksgiving page itself.
+  // Seasonal banner shown under the header on every page except the Christmas page itself.
   // After the holiday, set show to false here and it disappears everywhere.
   state = { playing: false };
 

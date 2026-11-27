@@ -5,7 +5,7 @@ body{margin:0}
 50%{transform:scaleY(1)}
 }
 
-.ss{container-type:inline-size;container-name:ss;position:relative;width:100%;overflow:hidden;background:radial-gradient(520px 140px at 18% 50%,rgba(232,160,98,.45),transparent 70%),radial-gradient(520px 140px at 86% 50%,rgba(90,40,20,.55),transparent 70%),linear-gradient(100deg,#7A3A1E 0%,#A9552B 48%,#8E4423 100%);border-bottom:2px solid #E3A766;font-family:"Karla",system-ui,sans-serif;color:#FBF1E2}
+.ss{container-type:inline-size;container-name:ss;position:relative;width:100%;overflow:hidden;background:radial-gradient(520px 140px at 18% 50%,rgba(229,124,112,.4),transparent 70%),radial-gradient(560px 150px at 88% 50%,rgba(46,94,62,.75),transparent 70%),linear-gradient(100deg,#6E1F22 0%,#9B2F2F 50%,#7A2427 100%);border-bottom:2px solid #E5B26B;font-family:"Karla",system-ui,sans-serif;color:#FBF1E2}
 
 .ss *{box-sizing:border-box}
 
@@ -30,15 +30,15 @@ body{margin:0}
 .ss-eq.is-playing i:nth-child(3){animation-delay:-.7s}
 .ss-eq.is-playing i:nth-child(4){animation-delay:-.2s}
 
-.ss-chip{flex-shrink:0;padding:3px 10px;border-radius:999px;background:#FBF1E2;color:#7A3A1E;font-family:"DM Mono","Courier New",monospace;font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+.ss-chip{flex-shrink:0;padding:3px 10px;border-radius:999px;background:#FBF1E2;color:#7A2427;font-family:"DM Mono","Courier New",monospace;font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
 
 .ss-text{min-width:0;font-size:18px;line-height:1.4;text-wrap:balance}
 
 .ss-text strong{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:22px;font-variation-settings:"SOFT" 100,"WONK" 1;margin-right:6px}
 
-.ss-btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:10px 22px;border-radius:999px;background:#FBF1E2;color:#5A2914;font-weight:700;font-size:17px;text-decoration:none;white-space:nowrap;box-shadow:0 6px 16px -8px rgba(40,15,5,.8);transition:background-color .18s ease,transform .18s ease}
+.ss-btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:10px 22px;border-radius:999px;background:#FBF1E2;color:#6E1F22;font-weight:700;font-size:17px;text-decoration:none;white-space:nowrap;box-shadow:0 6px 16px -8px rgba(40,15,5,.8);transition:background-color .18s ease,transform .18s ease}
 
-.ss-btn:hover{background:#FFFFFF;color:#5A2914;transform:translateY(-1px)}
+.ss-btn:hover{background:#FFFFFF;color:#6E1F22;transform:translateY(-1px)}
 
 .ss-btn:focus-visible{outline:3px solid #FBF1E2;outline-offset:3px}
 

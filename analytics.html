@@ -102,7 +102,15 @@ const SONGS = {
   'tomorrow-comes-in-a-box': 'Tomorrow Comes in a Box', 'stay-for-the-leftovers': 'Stay for the Leftovers',
   'heres-to-the-quiet-ones': 'Here’s to the Quiet Ones', 'keep-the-good': 'Keep the Good'
 };
-const PAGES = { '/': 'Home', '/music': 'Music', '/band': 'Meet the Band', '/about': 'About', '/contact': 'Contact', '/thanksgiving': 'Thanksgiving', '/404': 'Not found' };
+const PAGES = { '/': 'Home', '/music': 'Music', '/band': 'Meet the Band', '/about': 'About', '/contact': 'Contact', '/christmas': 'Christmas', '/thanksgiving': 'Thanksgiving', '/privacy': 'Privacy', '/404': 'Not found' };
+
+// One funnel per seasonal page (newest first). Older pages are hidden once they have no visits in the period.
+// Falls back to the single Thanksgiving funnel from older versions of the analytics service.
+function seasonFunnels(d) {
+  const all = d.funnels ? Object.entries(d.funnels) : [['/thanksgiving', d.funnel_thanksgiving || {}]];
+  const shown = all.filter(([, f], i) => i === 0 || (f && f.visited));
+  return shown;
+}
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const n = (v) => Number(v || 0).toLocaleString();
 const pct = (a, b) => b ? Math.round((a / b) * 100) : 0;
@@ -147,7 +155,7 @@ async function load(pageSel) {
     d = await r.json();
   } catch (e) { app.innerHTML = `<p class="err">Couldn’t load the numbers. ${esc(e.message)} Refresh the page to try again.</p>`; return; }
   document.getElementById('range-note').textContent = 'All visits except people who turned analytics off · since ' + d.since + ' (UTC) · updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ', refreshes every minute';
-  const t = d.totals, f = d.funnel_thanksgiving;
+  const t = d.totals;
   const scroll = Object.fromEntries(d.scroll.map((s) => [s.path, s]));
   const exits = Object.fromEntries(d.exits.map((x) => [x.path, x]));
   app.innerHTML = `
@@ -170,10 +178,10 @@ async function load(pageSel) {
         <div>${table([{ h: 'Clicked from page', f: (r) => page(r.path) }, { h: 'Visits', num: 1, f: (r) => n(r.visits) }, { h: 'Clicks', num: 1, f: (r) => n(r.clicks) }], d.easybreathe_pages)}</div>
       </div></section>
 
-    <section class="card wide"><h2>Thanksgiving: from visit to Easy Breathe</h2><p class="note">Visits to /thanksgiving, how many played a song there, and how many of those then went to Easy Breathe (insurance check, home sleep test or store) in the same visit. ${n(f.easybreathe_any)} Thanksgiving visits went to Easy Breathe in total, with or without playing a song.</p>
+    ${seasonFunnels(d).map(([path, f]) => `<section class="card wide"><h2>${esc(PAGES[path] || path)}: from visit to Easy Breathe</h2><p class="note">Visits to ${esc(path)}, how many played a song there, and how many of those then went to Easy Breathe (insurance check, home sleep test or store) in the same visit. ${n(f.easybreathe_any)} visits to this page went to Easy Breathe in total, with or without playing a song.</p>
       <div class="funnel">
         ${[['Visited the page', f.visited], ['Played a song', f.played], ['Went to Easy Breathe', f.easybreathe]].map(([l, v]) => `<div class="fstep"><span>${l}</span>${meter(pct(v, f.visited))}<b>${n(v)} · ${pct(v, f.visited)}%</b></div>`).join('')}
-      </div></section>
+      </div></section>`).join('\n')}
 
     <section class="card wide"><h2>Songs</h2><p class="note">Plays include resuming after a pause. “Finished” and the listening marks are shares of fresh starts.</p>
       ${table([
@@ -200,7 +208,7 @@ async function load(pageSel) {
         { h: 'Left from here', num: 1, f: (r) => ((exits[r.path] || {}).exit_rate || 0) + '%' }
       ], d.pages)}</section>
 
-    <section class="card"><h2>Where visits came from</h2><p class="note">“Direct” includes people who typed the address they heard on hold.</p>
+    <section class="card"><h2>Where visits came from</h2><p class="note">“campaign: hold-music” came through easybreatheband.com/hold; “campaign: easybreathe-redirect” came through a redirect from easybreathe.com (for example easybreathe.com/thanksgiving). “Direct” includes people who typed the band site’s address.</p>
       ${table([{ h: 'Source', wrap: 1, f: (r) => esc(r.source) }, { h: 'Visits', num: 1, f: (r) => n(r.visits) }], d.sources)}</section>
 
     <section class="card"><h2>Landing pages and devices</h2><p class="note">The first page of each visit, then visits by screen size.</p>
